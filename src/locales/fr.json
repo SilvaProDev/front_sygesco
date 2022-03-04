@@ -1,0 +1,55 @@
+{
+"date_debut":"date de début",
+"date_fin":"date de fin",
+"semaine_passe":"Total de la semaine passée",
+"total_to_day":"Total payer aujourd'hui",
+"total_hier":"Total cantine payée hier",
+"mois_passe":"Total du mois passé",
+"detailPaiementCantine":"Détail des paiements de la cantine scolaire",
+    "ul":{
+        "anne":"Année Scolaire",
+        "trimestre":"Trimestre/Semestre",
+        "niveau":"Niveau",
+        "liste":"Liste des élèves de la classe de",
+        "classe":"Classe",
+        "importation":"Importer la liste des élèves",
+        "matiere":"Matière"
+    
+        },
+        "nav":{
+            "parametre":"Paramètres",
+            "langue":"Langue"
+        },
+        "SideBar":{
+            "Livret":"Livret de compétence",
+            "Accueile":"Accueil",
+            "TableauDeBord":"Tableau de bord",
+            "inscriptions":"Inscription",
+            "DetailEleve":"Classe/détail de l'élève",
+            "note":"Notes",
+            "cantine":"Cantine",
+            "transport":"transport",
+            "scolarite":"Scolarité",
+            "notification":"Notification",
+            "gestionDesUtilisateur":"gestion des utilisateurs"
+        },
+        "SideBarli":{
+            "configLivret":"Configurer le livret",
+            "NewLivret":"Nouvelle insertion",
+            "VoirLivret":"Voir livret",
+            "nouvelleInscription":"Nouvelle Inscription",
+            "ListeDesEleve":"liste des élèves",
+            "NoteIndividuelle":"note individuelle",
+            "NoteGroupe":"note groupé",
+            "DetailDesNotes":"détail des notes",
+            "cantineStatistique":"statistique de la cantine",
+            "cantineDetail":"paiement de la cantine",
+            "scolarite":"paiement de la scolarité",
+            "statistColarite":"Statistique de la scolarité",
+            "transport":"Payer le transport",
+            "statisTransport":"Statistique du transport",
+            "email":"Envoyer email",
+            "sms":"Envoie de sms"
+           
+        }
+  }

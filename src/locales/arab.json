@@ -1,0 +1,56 @@
+{
+    "date_debut":"date de début",
+    "date_fin":"date de fin",
+    "semaine_passe":"Total de la semaine passée",
+    "total_to_day":"Total payer aujourd'hui",
+    "total_hier":"Total cantine payée hier",
+    "mois_passe":"Total du mois passé",
+    "detailPaiementCantine":"Détail des paiements de la cantine scolaire",
+        "ul":{
+            "anne":"Année Scolaire",
+            "trimestre":"Trimestre",
+            "niveau":"Niveau",
+            "liste":"Liste des élèves de la classe de",
+            "classe":"Classe",
+            "importation":"Importer la liste des élèves",
+            "matiere":"Matière"
+        
+            },
+            "nav":{
+                "parametre":"Paramètre",
+                "langue":"Langue"
+            },
+            "SideBar":{
+                "Livret":"كتيب الكفاءات",
+                "Accueile":"ترحيب",
+                "TableauDeBord":"لوحة القيادة",
+                "inscriptions":"التسجيل",
+                "DetailEleve":"تفاصيل الفصل / الطالب",
+                "note":"ملحوظات",
+                "cantine":"مقصف",
+                "transport":"المواصلات",
+                "scolarite":"التعليم",
+                "notification":"تنبيه",
+                "gestionDesUtilisateur":"gestion des utilisateurs"
+            },
+            "SideBarli":{
+                "configLivret":"تكوين الكتيب",
+                "NewLivret":"إدخال جديد",
+                 "VoirLivret":"انظر الكتيب",
+                "nouvelleInscription":"تسجيل جديد",
+                "ListeDesEleve":"قائمة الطلاب",
+                "NoteIndividuelle":"ملاحظة فردية",
+                "NoteGroupe":"ملاحظة مجمعة",
+                "DetailDesNotes":"تفاصيل الملاحظات",
+                "cantineStatistique":"إحصائيات المقصف",
+                "cantineDetail":"تفاصيل المقصف",
+                "scolarite":"دفع الرسوم الدراسية",
+                "statistColarite":"إحصاءات التعليم",
+                "transport":"دفع مقابل النقل",
+                "statisTransport":"إحصاءات النقل",
+                "email":"ارسل بريد الكتروني",
+                "sms":"أرسل رسالة"
+              
+               
+            }
+      }

@@ -1,0 +1,65 @@
+{
+"date_debut":"start date",
+"date_fin":"end date",
+"semaine_passe":"Total for the past week",
+"total_to_day":"Total pay today",
+"total_hier":"Total canteen paid yesterday",
+"mois_passe":"Total of the past month",
+"detailPaiementCantine":"Details of school canteen payments",
+"ul":{
+    "anne":"School year",
+    "trimestre":"Trimester/Semester",
+    "niveau":"Level",
+    "classe":"Class",
+    "liste":"List of students of class",
+    "matiere":"Matter",
+    "importation":"Import the list of students"
+
+    },
+    "nav":{
+        "parametre":"Parameters",
+        "langue":"Language"
+    },
+    "SideBar":{
+        "Livret":"Competency booklet",
+        "Accueile":"homepage",
+        "TableauDeBord":"Dashboard",
+        "inscriptions":"registration",
+        "DetailEleve":"class/detail of student",
+        "note":"notes",
+        "cantine":"canteen",
+        "transport":"transport",
+        "scolarite":"schooling",
+        "notification":"Notification",
+        "gestionDesUtilisateur":"Users Managements"
+    },
+    "SideBarli":{
+        "configLivret":"Configure the booklet",
+        "NewLivret":"New insertion",
+        "VoirLivret":"See booklet",
+        "nouvelleInscription":"new registration",
+        "ListeDesEleve":"list of students",
+        "NoteIndividuelle":"individual note",
+        "NoteGroupe":"grouped note",
+        "DetailDesNotes":"notes detail",
+        "cantineStatistique":"canteen statistics",
+        "cantineDetail":"payment of the canteen",
+        "scolarite":"Tuition payment",
+        "statistColarite":"Education statistics",
+        "transport":"Pay for transport",
+        "statisTransport":"Transport statistics",
+        "email":"Send email",
+        "sms":"Send sms"
+       
+    },
+    "Parametre":{
+        "niveau":"new registration",
+        "ListeDesEleve":"list of students",
+        "NoteIndividuelle":"individual note",
+        "NoteGroupe":"grouped note",
+        "DetailDesNotes":"notes detail",
+        "cantineStatistique":"canteen statistics",
+        "cantineDetail":"detail of the canteen"
+       
+    }
+}
