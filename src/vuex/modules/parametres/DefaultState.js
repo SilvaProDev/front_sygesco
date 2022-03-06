@@ -4,6 +4,7 @@ const defaultState = {
     classe:[],
     trimestre:[],
     matiere:[],
+    nouvelle_matiere:[],
     EnvoiEmail:[],
     EnvoiSms:[],
     transport:[],

@@ -31,6 +31,7 @@ import Annee from "../pages/parametre/Annee.vue"
 import Niveau from "../pages/parametre/Niveau.vue"
 import Semestre from "../pages/parametre/Semestre.vue"
 import Matiere from "../pages/parametre/Matiere.vue"
+import NouvelleMatiere from "../pages/parametre/NouvelleMatiere.vue"
 import Classe from "../pages/parametre/Classe.vue"
 import Utilisateur from "../pages/personnel/Utilisateur.vue"
 import Role from "../pages/parametre/Role.vue"
@@ -116,6 +117,11 @@ const routes = [
                 path:"matieres",
                 name:"Matiere",
                 component:Matiere
+            },
+            {
+                path:"nouvelle-matiere",
+                name:"NouvelleMatiere",
+                component:NouvelleMatiere
             },
             {
                 path:"semestre",

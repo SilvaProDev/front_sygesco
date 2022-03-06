@@ -12,7 +12,11 @@
                       </select>
                   </div>
                 </div>
-               
+              
+               {{teacherName(teacherId(5))}}
+               <!-- {{testMoiAussi(8, 10)}} -->
+               <!-- {{NoteGoupeMatiere1}} -->
+               <!-- {{ResteMoi1}} -->
                 
            <p v-if="formData.trimestre_id == ''" class=" ml-5 text-gray-800 font-weight-bold"> Selectionnez  le trimestre pour voir le bulletin</p>
                 <div style="margin-left:80%" v-if="formData.trimestre_id != ''">
@@ -156,7 +160,12 @@
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id) || 0 }}</td>   
                         <td style="padding:0px; text-align:center;">{{item.coefficient}}</td>   
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id) * (item.coefficient)}}</td>   
-                        <td style="padding:0px; text-align:center;">26è</td>   
+                        <td style="padding:0px; text-align:center;" v-if="testMoiAussi(item.id, SomParMatiere(item.id))==1">
+                           {{testMoiAussi(item.id, SomParMatiere(item.id))+"er(ère)"}}
+                           </td>   
+                        <td style="padding:0px; text-align:center;" v-else>
+                           {{testMoiAussi(item.id, SomParMatiere(item.id))+"ème"}}
+                           </td>   
                         <td style="padding:0px; text-align:center;">
                           <span v-if="SomParMatiere(item.id) <=5">Très faible</span>
                           <span v-if="SomParMatiere(item.id) >=6 && SomParMatiere(item.id) <10">Faible</span>
@@ -165,7 +174,7 @@
                           <span v-if="SomParMatiere(item.id) >= 15 && SomParMatiere(item.id) <17">Très Bien</span>
                           <span v-if="SomParMatiere(item.id) >= 17 && SomParMatiere(item.id) <=20">Excellent</span>
                         </td>   
-                        <td style="padding:0px; text-align:center;">Jean Paul</td>   
+                        <td style="padding:0px 5px;">{{teacherName(teacherId(item.id)) || 'Non renseigné'}}</td>   
                     </tr>
                    
                    
@@ -190,8 +199,12 @@
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id)}}</td>   
                         <td style="padding:0px; text-align:center;">{{item.coefficient}}</td>   
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id) * (item.coefficient)}}</td>   
-                        <td style="padding:0px; text-align:center;">26è</td>   
-                        <td style="padding:0px; text-align:center;">
+                        <td style="padding:0px; text-align:center;" v-if="testMoiAussi(item.id, SomParMatiere(item.id))==1">
+                           {{testMoiAussi(item.id, SomParMatiere(item.id))+"er(ère)"}}
+                           </td>   
+                        <td style="padding:0px; text-align:center;" v-else>
+                           {{testMoiAussi(item.id, SomParMatiere(item.id))+"ème"}}
+                           </td>                         <td style="padding:0px; text-align:center;">
                           <span v-if="SomParMatiere(item.id) <=5">Très faible</span>
                           <span v-if="SomParMatiere(item.id) >=6 && SomParMatiere(item.id) <10">Faible</span>
                           <span v-if="SomParMatiere(item.id) >= 10 && SomParMatiere(item.id) <12">Passable</span>
@@ -199,7 +212,7 @@
                           <span v-if="SomParMatiere(item.id) >= 15 && SomParMatiere(item.id) <17">Très Bien</span>
                           <span v-if="SomParMatiere(item.id) >= 17 && SomParMatiere(item.id) <=20">Excellent</span>
                         </td>   
-                        <td style="padding:0px; text-align:center;">Jean Paul</td>   
+                        <td style="padding:0px 2px;">{{teacherName(teacherId(item.id)) || 'Non renseigné'}}</td>   
                     </tr>
                 
                   
@@ -226,7 +239,12 @@
                           <span v-else> 0 </span>
                         </td>   
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id) * (item.coefficient)}}</td>   
-                        <td style="padding:0px; text-align:center;">26è</td>   
+                         <td style="padding:0px; text-align:center;" v-if="testMoiAussi(item.id, SomParMatiere(item.id))==1">
+                           {{testMoiAussi(item.id, SomParMatiere(item.id))+"er(ère)"}}
+                           </td>   
+                        <td style="padding:0px; text-align:center;" v-else>
+                           {{testMoiAussi(item.id, SomParMatiere(item.id))+"ème"}}
+                           </td> 
                         <td style="padding:0px; text-align:center;">
                           <span v-if="SomParMatiere(item.id) <=5">Très faible</span>
                           <span v-if="SomParMatiere(item.id) >=6 && SomParMatiere(item.id) <10">Faible</span>
@@ -235,7 +253,7 @@
                           <span v-if="SomParMatiere(item.id) >= 15 && SomParMatiere(item.id) <17">Très Bien</span>
                           <span v-if="SomParMatiere(item.id) >= 17 && SomParMatiere(item.id) <=20">Excellent</span>
                         </td>   
-                        <td style="padding:0px; text-align:center;">Jean Paul</td>   
+                        <td style="padding:0px 2px; ">{{teacherName(teacherId(item.id)) || 'Non renseigné'}}</td>   
                     </tr>
                    
                      
@@ -1002,6 +1020,9 @@ export default {
       this.getClasse();
     }
     this.get_note();
+    this.getRole();
+    this.getUtilisateur();
+    this.getAffectation();
      this.getMatiere();
      this.getTransport();
      this.getAbsence();
@@ -1025,6 +1046,7 @@ export default {
      ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersMatiere","gettersTrimestre", "gettersAnne",
      "gettersTransport"]),
      ...mapGetters("student",["GetterStudent", "GetterCantine", "GetterScolarite", "GetterAbsence","GetterNote"]),
+         ...mapGetters("personnel",["gettersUtilisateur", "gettersAffectation","gettersloadingAffectation","gettersRole"]),
    
   MatiereLitteraire(){
     return this.gettersMatiere.filter(tem=>tem.statut == 1 && tem.classe_id == this.editText.classe_id)
@@ -1036,22 +1058,27 @@ export default {
     return this.gettersMatiere.filter(tem=>tem.statut == 3 && tem.classe_id == this.editText.classe_id)
   },
 
-//   const data = [ { userid: 1, placename: 'abc', price: 10 }, { userid: 1, placename: 'pqr', price: 20 }, { userid: 1, placename: 'xyz' , price: 30}, { userid: 2, placename: 'abc' , price: 40}, { userid: 2, placename: 'lmn' , price: 50}],
-//     result = Object.values(data.reduce((r,o) => {
-//       r[o.userid] = r[o.userid] || {userid: o.userid, placename: [], price: 0};
-//       r[o.userid].placename.push(o.placename);
-//       r[o.userid].price += o.price;
-//       return r;
-//     },{}));
-// console.log(result);
-  TotalMoyDesMatiere(){
-    return (test)=>{
-      if(test !=''){
-        let objet = this.MoyennePArMatiere(test)/this.TaillePArMatiere(test)
-        return [objet];
+  teacherId(){
+    return (id)=>{
+      if(id != ""){
+        let objet = this.gettersAffectation.find(tem=>tem.matiere_id == id)
+        if(objet){
+          return objet.teacher_id
+        }
       }
     }
   },
+  teacherName(){
+    return (id)=>{
+      if(id != ""){
+        let objet = this.gettersUtilisateur.find(tem=>tem.id == id)
+        if(objet){
+          return objet.name
+        }
+      }
+    }
+  },
+
   
        SommeScolariteParElev(){
        let collect =[]
@@ -2311,6 +2338,108 @@ export default {
      }
      return []
      },
+   ResteMoi001(){
+     if(this.formData.trimestre_id != ""){
+       let collect =[]
+       this.MatiereLitteraire.filter(item =>{
+         this.GetterNote.forEach(element => {        
+           if(item.id == element.matiere_id && element.trimestre_id == this.formData.trimestre_id ){
+             collect.push(element)
+           }
+         })
+       })
+       return collect;
+     }
+     return []
+     },
+     NoteGoupeMatiere1(){     
+        let collect =[]
+        let objet = this.GetterNote
+        if(objet.length >0){
+          objet.forEach(element => {
+            if(element.matiere_id == 1){
+              collect.push(element)
+            }
+          });
+        }
+        return collect;     
+     },
+
+     testMoiAussi(){
+      return (id1, id2)=>{
+        if(id1 != "" && id2 !=""){
+          let objet = this.MatiereParStudent(id1).lastIndexOf(id2)
+          if(objet == 0){
+            return this.MatiereParStudent(id1).length
+          }
+          return objet
+        }
+      }
+     },
+
+     MatiereParStudent(){    
+       return (id) =>{
+         if(id != ""){
+            var note1 =[]
+        let objet = this.GetterNote.filter(tem => tem.matiere_id == id && tem.classe_id == this.editText.classe_id);   
+        if (objet.length > 0) {
+          let array1 = [];
+          let array2 = [];
+          objet.forEach(function (val) {
+            if(val.student_id ==1){
+              array1.push(val.note); 
+            }
+            if(val.student_id ==2){
+              array2.push(val.note); 
+            }
+          });
+          let unique1 = array1;      
+          let unique2 = array2;      
+         if (unique1.length == 0) {return [];}
+         else{
+           let test1 = unique1.map(Number).reduce(function(a,b){
+             return (a +b);
+           }, 0);
+            note1.push(Math.round(test1/unique1.length))
+          //  return note1
+         }
+         if (unique2.length == 0) {return [];}
+         else{
+           let test2 = unique2.map(Number).reduce(function(a,b){
+             return (a +b);
+           }, 0);
+
+            note1.push(Math.round(test2/unique2.length))
+            note1 = note1.sort(function(a,b){
+              return a-b
+            })
+
+            return note1
+         }
+        } 
+        return 0;
+             
+         }
+       }
+       
+     //  } 
+     },
+
+     MatiereParStudenuut(){
+       var note1 = []
+       let collect =[]
+      //  let Taille1 =0
+        this.NoteGoupeMatiere1.forEach(element => {
+         if(element.student_id == 1){
+           collect.push(element.note)
+          //  Taille1 = collect.length
+           note1.push( collect.length)
+         }
+        
+       });
+       return collect.length;
+     },
+
    FilterByCoef(){
      if(this.formData.trimestre_id != ""){
 
@@ -3528,20 +3657,7 @@ export default {
      }
      return []
      },
-   MatiereScientifique22(){
-     if(this.formData.trimestre_id != ""){
-       let collect =[]
-       this.GetterStudent.filter(item =>{
-         this.GetterNote.forEach(element => {        
-           if(item.id == element.student_id && element.trimestre_id == this.formData.trimestre_id){
-             collect.push(element)
-           }
-         })
-       })
-       return collect;
-     }
-     return []
-     },
+  
 
 
 // Debut Calcul de moyenne matiere_id = 1
@@ -4904,6 +5020,8 @@ CoeffecientTotal(){
          ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","get_Liste_Cantine",
          "SupprimerCantine", "getAbsence", "AjouterAbsence", "AjouterCantine", "getScolarite", "AjouterScolarite",
          "get_note"]),
+           ...mapActions("personnel",["getUtilisateur","AjouterUtilisateur","ModifierUtilisateur","SupprimerUtilisateur",
+         "AjouterAffectation","getAffectation","SupprimerAffectation", "getRole"]),
 
 
     

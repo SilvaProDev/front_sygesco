@@ -18,7 +18,7 @@
           <img :src="getterProfileUsers.image" class="rounded-circle  bg-primary" width="30">
 
           </span>
-        <span v-if="getterProfileUsers.length !=0 && getterProfileUsers.image == 'vide'">
+        <span v-if="getterProfileUsers.length !=0 && getterProfileUsers.image == 'vide' || getterProfileUsers.image ==null">
           <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle  bg-primary" width="40">
         </span>
                     Profile 

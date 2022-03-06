@@ -299,6 +299,54 @@ export function SupprimerMatiere({ commit }, id) {
         Api.delete('/matiere/' + id,).then(() => dialog.close())
       })
   }
+  //ACTION DE LA MATIERE
+
+  export const getNouvelleMatiere = ({commit})=>{
+    Api.get('/nouvelle-matiere').then(resp =>{
+        commit("GET_ALL_NOUVELLE_MATIERE", resp.data)
+    }).catch(error =>console.log(error));
+}
+
+export const AjouteNouvellerMatiere = ({commit, dispatch}, objet)=>{
+    asyncLoading(Api.post('/nouvelle-matiere', objet))
+       .then(resp =>{
+           
+               commit("AJOUTER_NOUVELLE_MATIERE", resp.data);
+           
+            dispatch("getNouvelleMatiere")
+               
+            Vue.notify({
+              title: 'Success',
+              text: 'Enregistrement a été Effectué avec Succès!',
+              type: "success"
+            })
+              
+            
+       }).catch(error =>console.log(error));
+}
+export const ModifierNouvelleMatiere = ({commit}, objet)=>{
+    asyncLoading(Api.put('/nouvelle-matiere/'+ objet.id,objet)).then(resp =>{
+           commit("MODIFIER_NOUVELLE_MATIERE", resp.data)
+           Vue.notify({
+            title: 'Success',
+            text: 'La modification a été Effectué avec Succès!',
+            type: "success"
+          })
+           
+       }).catch(error =>console.log(error));
+}
+
+
+//Suppression
+export function SupprimerNouvelleMatiere({ commit }, id) {
+
+    this.$app.$dialog
+      .confirm("Voulez vouz vraiment supprimer ?")
+      .then(dialog => {
+        commit('SUPPRIMER_NOUVELLE_MATIERE', id)
+        Api.delete('/nouvelle-matiere/' + id,).then(() => dialog.close())
+      })
+  }
 
   //ACTION DE L' EMAIL
 

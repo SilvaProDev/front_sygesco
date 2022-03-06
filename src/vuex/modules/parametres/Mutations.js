@@ -142,6 +142,29 @@ export const SUPPRIMER_MATIERE = (state, id) => {
   state.EnvoiEmail = state.EnvoiEmail.filter(prest => prest.id != id)
 }
 
+//MUTATION DE LA MATIERE
+export const GET_ALL_NOUVELLE_MATIERE =(state, tableau)=>{
+  state.nouvelle_matiere = tableau
+}
+
+export const AJOUTER_NOUVELLE_MATIERE =(state, nouveau)=>{
+  state.nouvelle_matiere.unshift(nouveau)
+}
+
+export const MODIFIER_NOUVELLE_MATIERE = (state, objetModifie) => {
+  state.nouvelle_matiere = state.nouvelle_matiere.map(elt => {
+    if (elt.id == objetModifie.id) {
+      elt = { ...objetModifie };
+    }
+
+    return elt;
+  });
+};
+
+export const SUPPRIMER_NOUVELLE_MATIERE = (state, id) => {
+  state.nouvelle_matiere = state.nouvelle_matiere.filter(prest => prest.id != id)
+}
+
 
 
 //MUTATION ENVOI D'EMAIL

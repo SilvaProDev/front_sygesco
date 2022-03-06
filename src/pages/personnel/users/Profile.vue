@@ -137,25 +137,25 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <h6 class="mb-0">Phone</h6>
+                      <h6 class="mb-0">Mobile</h6>
                     </div>
                     <div class="col-sm-8">
                       {{getterProfileUsers.phone || "Non renseigné"}}
                     </div>
                   </div>
-                  <hr>
-                  <div class="row">
+                  <!-- <hr> -->
+                  <!-- <div class="row">
                     <div class="col-sm-4">
                       <h6 class="mb-0">Mobile</h6>
                     </div>
                     <div class="col-sm-8">
                       {{getterProfileUsers.mobile || 'Non renseigné'}}
                     </div>
-                  </div>
+                  </div> -->
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <h6 class="mb-0">Address</h6>
+                      <h6 class="mb-0">Addresse</h6>
                     </div>
                     <div class="col-sm-8">
                        {{getterProfileUsers.adresse || 'Non renseigné'}}

@@ -48,13 +48,13 @@
                         placeholder="Enter le numéro"
                         >
                     </div>
-                    <div class="form-group" v-if="Nombre==4">
-                         <label for="exampleInputPassword">Date de naissance:</label>
-                          
-                      <input  type="date" class="form-control" id="exampleInputPassword" placeholder="Password">
-                    </div>
-                    <div class="form-group" v-else>
-                         <label for="exampleInputPassword">Mot de passe:</label>
+                   
+                    <div class="form-group" >
+                         <label for="exampleInputPassword">
+                           <span v-if="Nombre==4">Matricule élève</span>
+                           <span v-else>Mot de passe:</span>
+                           
+                           </label>
                           <span style="color:red; font-style:italic;"
                             v-if="$v.User.password.$error && !$v.User.password.required"
                             role="alert"> 

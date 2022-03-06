@@ -5,19 +5,22 @@
    
         <div class="container ml-5">
           <div class="row">
+              <div style="margin-left:80%">
+                     <button type="button" class="btn btn-warning" @click.prevent="CallBack()">Nouvelle matière</button> &nbsp;
+                     <!-- <button type="button" class="btn btn-info" @click.prevent="genererEnPdf()">Imprimer</button> -->
+                </div>
             <div class="col-lg-11 mb-4">
-              <!-- Simple Tables -->
               <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">La liste des matières</h6>
-                  <div class="input-group col-sm-3" v-if="!showModal && !showIsModal">
+                  <!-- <div class="input-group col-sm-3" v-if="!showModal && !showIsModal">
                         <input  type="text" v-model="search" class="form-control" placeholder="Recherche par matière ...">
                         <div class="input-group-append">
                         <button class="btn btn-secondary" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
@@ -38,7 +41,7 @@
                         <td>{{LibelleNiveau(item.niveau_id)}}</td>
                         <td v-if="item.serie != 0">{{item.serie}}</td>
                         <td v-else>{{'Non'}}</td>
-                        <td>{{item.libelle}}</td>
+                        <td>{{LibelleMatiere(item.nouvelle_matiere_id)}}</td>
                         <td>{{item.coefficient}}</td>
                        
                         <td>
@@ -134,7 +137,21 @@
                               <option value="TleD">Tle D</option>                                                                         
                           </select>
                       </div>
-                <div class="col-sm-6">
+                      <div class="col-sm-6">
+                      <label for="niveau">Matière </label>
+                         <span style="color:red; font-style:italic;"
+                              v-if="$v.formData.nouvelle_matiere_id.$error && !$v.formData.nouvelle_matiere_id.required"
+                              role="alert"> 
+                              <span style="color:red; font-weight:bold">*</span>
+                              Ce champs est obligatoire!
+                          </span>
+                        <select class="form-control" id="classe" v-model="formData.nouvelle_matiere_id" @input="$v.formData.nouvelle_matiere_id.$touch()" >
+                          <option value="">Selectionnez la classe</option>
+                          <option v-for="item in gettersNouvelleMatiere" :key="item.id" :value="item.id"> {{item.libelle}} </option>
+                                              
+                      </select>
+                  </div>
+                <!-- <div class="col-sm-6">
                   <label for="libelle">Matière </label>   
                 <span style="color:red; font-style:italic;"
                     v-if="$v.formData.libelle.$error && !$v.formData.libelle.required"
@@ -144,7 +161,7 @@
                 </span>  
                 <input @input="$v.formData.libelle.$touch()" v-model="formData.libelle"   type="text"  class="form-control" id="libelle" aria-describedby="emailHelp"
                 placeholder="Entrer la matière">
-            </div>
+            </div> -->
             
             </div>
 
@@ -263,7 +280,21 @@
                               <option value="TleD">Tle D</option>                                                                         
                           </select>
                       </div>
-                <div class="col-sm-6">
+                       <div class="col-sm-6">
+                      <label for="niveau">Matière </label>
+                         <span style="color:red; font-style:italic;"
+                              v-if="$v.editText.nouvelle_matiere_id.$error && !$v.editText.nouvelle_matiere_id.required"
+                              role="alert"> 
+                              <span style="color:red; font-weight:bold">*</span>
+                              Ce champs est obligatoire!
+                          </span>
+                        <select class="form-control" id="classe" v-model="editText.nouvelle_matiere_id" @input="$v.editText.nouvelle_matiere_id.$touch()" >
+                          <option value="">Selectionnez la classe</option>
+                          <option v-for="item in gettersNouvelleMatiere" :key="item.id" :value="item.id"> {{item.libelle}} </option>
+                                              
+                      </select>
+                  </div>
+                <!-- <div class="col-sm-6">
                   <label for="libelle">Matière </label>   
                 <span style="color:red; font-style:italic;"
                     v-if="$v.editText.libelle.$error && !$v.editText.libelle.required"
@@ -273,7 +304,7 @@
                 </span>  
                 <input @input="$v.editText.libelle.$touch()" v-model="editText.libelle"   type="text"  class="form-control" id="libelle" aria-describedby="emailHelp"
                 placeholder="Entrer la matière">
-            </div>
+            </div> -->
             
             </div>
 
@@ -383,7 +414,7 @@ export default {
     validations:{
         formData:{
             
-            libelle:{required},
+            nouvelle_matiere_id:{required},
             niveau_id:{required},
             classe_id:{required},
             statut:{required},
@@ -393,7 +424,7 @@ export default {
         },
         editText:{
             
-            libelle:{required},
+            nouvelle_matiere_id:{required},
             coefficient:{required},
             niveau_id:{required},
             // serie:{required},
@@ -407,13 +438,14 @@ export default {
       this.getTrimestre();
       this.getAnnee();
       this.getMatiere();
+       this.getNouvelleMatiere();
        if(this.gettersClasse.length == 0){
       this.getClasse();
     }
     
   },
   computed:{
-     ...mapGetters("parametres",["gettersNiveau","gettersTrimestre","gettersAnne", "gettersMatiere"]),
+     ...mapGetters("parametres",["gettersNiveau","gettersTrimestre","gettersAnne", "gettersMatiere","gettersNouvelleMatiere"]),
        ...mapGetters("parametres",["gettersNiveau", "gettersClasse"]),
 
       LibelleNiveaux(){
@@ -457,18 +489,29 @@ export default {
          }
        }
      },
+     LibelleMatiere(){
+       return (id)=>{
+         if(id != ""){
+           let obj = this.gettersNouvelleMatiere.find(tem=>tem.id == id)
+           if(obj){
+             return obj.libelle;
+           }
+         }
+       }
+     },
     filtreListre() {
-      const searchTerm = this.search.toLowerCase();
+      // const searchTerm = this.search.toLowerCase();
 
-      return (this.gettersMatiere.filter((item) => { return ( item.libelle.toLowerCase().includes(searchTerm) );}) )
-      
+      //  return (this.gettersMatiere.filter((item) => { 
+      //    return  item.niveau_id.toLowerCase().includes(searchTerm)}))
+      return this.gettersMatiere
     },
   
   },
   methods:{
     ...mapActions("parametres",["getNiveau","ModifierNiveau","AjouterNiveau", "SupprimerNiveau","getAnnee","getClasse",
                 "getTrimestre","AjouterTrimestre","ModifierTrimestre","ModifierTrimestreEncours","SupprimerTrimestre",
-                "getMatiere","AjouterMatiere","ModifierMatiere","SupprimerMatiere"]),
+                "getMatiere","AjouterMatiere","ModifierMatiere","SupprimerMatiere","getNouvelleMatiere"]),
     showModals:function(){
       this.showModal != this.showModal
     },
@@ -541,7 +584,7 @@ export default {
             this.$v.formData.$reset();
          this.formData = {
             
-             libelle:"",
+             nouvelle_matiere_id:"",
             niveau_id:"",
             classe_id:"",
             statut:"",
@@ -549,6 +592,11 @@ export default {
             serie:"",
              
             };
+    },
+    CallBack(){
+      this.$router.push({
+        name:'NouvelleMatiere'
+      })
     },
       formaterDate(date) {
       return moment(date, "YYYY-MM-DD").format("DD-MM-YYYY");

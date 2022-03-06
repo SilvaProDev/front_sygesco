@@ -6,6 +6,7 @@ export const gettersNiveau = state =>state.niveau;
 export const gettersClasse = state =>state.classe;
 export const gettersTrimestre = state =>state.trimestre;
 export const gettersMatiere = state =>state.matiere;
+export const gettersNouvelleMatiere = state =>state.nouvelle_matiere;
 export const gettersEnvoiEmail = state =>state.EnvoiEmail;
 export const gettersEnvoiSms = state =>state.EnvoiSms;
 export const gettersTransport = state =>state.transport;
