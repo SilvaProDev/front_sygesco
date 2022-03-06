@@ -7,20 +7,12 @@
           <div class="row">
               <div style="margin-left:80%">
                      <button type="button" class="btn btn-warning" @click.prevent="CallBack()">Nouvelle matière</button> &nbsp;
-                     <!-- <button type="button" class="btn btn-info" @click.prevent="genererEnPdf()">Imprimer</button> -->
                 </div>
             <div class="col-lg-11 mb-4">
               <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">La liste des matières</h6>
-                  <!-- <div class="input-group col-sm-3" v-if="!showModal && !showIsModal">
-                        <input  type="text" v-model="search" class="form-control" placeholder="Recherche par matière ...">
-                        <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        </div>
-                    </div> -->
+                 
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
