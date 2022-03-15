@@ -9,7 +9,7 @@
                       <label for="niveau">Niveau </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden >Choisir le niveau</option>
                           <option v-for="item in gettersNiveau" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -20,7 +20,7 @@
                       <label for="niveau">Classe </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden >Choisir la classe</option>
                           <option v-for="item in AfficherClasse" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>

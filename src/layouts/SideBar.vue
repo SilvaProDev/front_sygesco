@@ -14,11 +14,11 @@
         
          <a v-if="getterProfileUsers.length !=0" :title="getterProfileUsers.name"  href="#" @click.prevent="ProfilUser" style="text-decoration: none;color:#fff">
         <div class="sidebar-brand-icon">
-          <span v-if="getterProfileUsers.length !=0 && getterProfileUsers.image != 'vide'">
+          <span v-if="getterProfileUsers.length !=0 && getterProfileUsers.image != 'vide' && getterProfileUsers.image !=null">
           <img :src="getterProfileUsers.image" class="rounded-circle  bg-primary" width="30">
 
           </span>
-        <span v-if="getterProfileUsers.length !=0 && getterProfileUsers.image == 'vide' || getterProfileUsers.image ==null">
+        <span v-else>
           <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle  bg-primary" width="40">
         </span>
                     Profile 
@@ -31,7 +31,7 @@
         
       
       </li>
-      <li class="nav-item" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==2">
+      <li class="nav-item" v-if=" getterProfileUsers.length != 0">
 
           <a href="" class="nav-link collapsed p-4" style="text-decoration: none;" @click.prevent="Accueil">
             <div class="BlockUserItemsub" style="color:#000; font-weight:bold">
@@ -39,18 +39,22 @@
                <span >{{ $t("SideBar.Accueile") }}</span>
             </div>
           </a>
-         <!-- <router-link tag="li"  to="accueil">
-          <a href="" class="nav-link collapsed p-4" style="text-decoration: none;" >
+         
+      </li>
+      <hr class="sidebar-divider my-0" v-if=" getterProfileUsers.length != 0">
+      <li class="nav-item" v-if=" getterProfileUsers.length != 0">
+
+          <a href="" class="nav-link collapsed p-4" style="text-decoration: none;" @click.prevent="BilanAnnee">
             <div class="BlockUserItemsub" style="color:#000; font-weight:bold">
               <i style="color:#000" class="fas fa-home"></i>
-               <span >{{ $t("SideBar.Accueile") }}</span>
+               <span >Bilan Annuel</span>
             </div>
           </a>
-        </router-link> -->
+         
       </li>
      
-      <hr class="sidebar-divider my-0" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==2">
-      <li class="nav-item " v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==2">
+      <hr class="sidebar-divider my-0" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==3">
+      <li class="nav-item " v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==3">
          <a href="" class="nav-link collapsed"  @click.prevent="dashbords">
         <div class="BlockUserItemsub" 
         style="color:#000; font-weight:bold">
@@ -93,8 +97,8 @@
     </div>
    
       </li>
-    <hr class="sidebar-divider" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==2">
-      <li class="nav-item" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==2">
+    <hr class="sidebar-divider" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==3">
+      <li class="nav-item" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==3">
           <div
       class="BlockUserItem"
       :class="{ BlockUserItemOver: menu_active == 5 }"
@@ -127,8 +131,8 @@
 
       </li>
 
-       <hr class="sidebar-divider" v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==2">
-      <li class="nav-item" v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==2">
+       <hr class="sidebar-divider" v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==3">
+      <li class="nav-item" v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==3">
           <div
       class="BlockUserItem"
       :class="{ BlockUserItemOver: menu_active == 120 }"
@@ -178,8 +182,8 @@
     
       </div>
       </li>
-       <hr class="sidebar-divider" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==2">
-      <li class="nav-item" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==2">
+       <hr class="sidebar-divider" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==3">
+      <li class="nav-item" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==3">
           <div
       class="BlockUserItem"
       :class="{ BlockUserItemOver: menu_active == 11 }"
@@ -305,6 +309,13 @@
           </span>
         </div>
       </a>
+      <a href="" class="flex-sm-fill  nav-link"  @click.prevent="activedOptionMenu(412, 'ScolariteEtat')">
+        <div class="BlockUserItemsub" :class="{ BlockUserItemsubOver: menu_active == 412 }">
+           <span  style="color:#000; font-weight:bold">
+            Etat de paiement
+          </span>
+        </div>
+      </a>
     
       </div>
       </li>
@@ -427,7 +438,7 @@ export default {
       },
       active1(){
         let objet = this.getterProfileUsers.role_id;
-        if(objet == 1 || objet == 2){
+        if(objet == 1 || objet == 3){
          return true
         }
         return false
@@ -452,6 +463,11 @@ export default {
      Accueil(){
         this.$router.push({
           name:'Caroussel'
+        })
+      },
+     BilanAnnee(){
+        this.$router.push({
+          name:'BilanAnne'
         })
       },
         ProfilUser(){

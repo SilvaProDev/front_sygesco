@@ -3,6 +3,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Dashbord from "../pages/milieu/Dashbord.vue"
 import Redirection from "../pages/milieu/Redirection.vue"
+import BilanAnne from "../pages/milieu/BilanAnne.vue"
+import BilanAnneeRgister from "../pages/milieu/BilanAnneeRgister.vue"
 import Entete from "../pages/milieu/Entete.vue"
 import EnteteConfig from "../pages/milieu/EnteteConfig.vue"
 import EnteteConfigMod from "../pages/milieu/EnteteConfigMod.vue"
@@ -11,8 +13,11 @@ import inscription from "../pages/milieu/eleves/inscription.vue"
 import editStudent from "../pages/milieu/eleves/editStudent.vue"
 import ListeDesEleves from "../pages/milieu/eleves/ListeDesEleves.vue"
 import DetailEleve from "../pages/milieu/eleves/DetailEleve.vue"
+import InfoEleve from "../pages/milieu/eleves/InfoEleve.vue"
+import DetailParentEleve from "../pages/milieu/eleves/DetailParentEleve.vue"
 import NotesEleve from "../pages/milieu/eleves/NotesEleve.vue"
 import ScolariteStatistique from "../pages/milieu/eleves/ScolariteStatistique.vue"
+import ScolariteEtat from "../pages/milieu/eleves/ScolariteEtat.vue"
 import ScolaritePaiement from "../pages/milieu/eleves/ScolaritePaiement.vue"
 import DetailNoteIndividuelle from "../pages/milieu/eleves/DetailNoteIndividuelle.vue"
 import NotesGroupe from "../pages/milieu/eleves/NotesGroupe.vue"
@@ -31,6 +36,8 @@ import Annee from "../pages/parametre/Annee.vue"
 import Niveau from "../pages/parametre/Niveau.vue"
 import Semestre from "../pages/parametre/Semestre.vue"
 import Matiere from "../pages/parametre/Matiere.vue"
+import ListeDeClasse from "../pages/parametre/ListeDeClasse.vue"
+import ListeDeMatiere from "../pages/parametre/ListeDeMatiere.vue"
 import NouvelleMatiere from "../pages/parametre/NouvelleMatiere.vue"
 import Classe from "../pages/parametre/Classe.vue"
 import Utilisateur from "../pages/personnel/Utilisateur.vue"
@@ -69,6 +76,16 @@ const routes = [
             },
            
             {
+                path: 'Bilan-annee',
+                name: 'BilanAnne',
+                component: BilanAnne
+              },
+            {
+                path: 'Bilan-annee-configuration',
+                name: 'BilanAnneeRgister',
+                component: BilanAnneeRgister
+              },
+            {
                 path: 'accueil',
                 name: 'Caroussel',
                 component: Caroussel
@@ -82,6 +99,16 @@ const routes = [
                 path:"modification-entete/:id",
                 name:"EnteteConfigMod",
                 component:EnteteConfigMod
+            },
+            {
+                path:"info-eleve/:id",
+                name:"InfoEleve",
+                component:InfoEleve
+            },
+            {
+                path:"detail-parent-info-eleve/:id",
+                name:"DetailParentEleve",
+                component:DetailParentEleve
             },
             {
                 path:"configuration-entete",
@@ -109,9 +136,24 @@ const routes = [
                 component:ScolaritePaiement
             },
             {
+                path:"etat-de-paiement-de-la-scolarite",
+                name:"ScolariteEtat",
+                component:ScolariteEtat
+            },
+            {
                 path:"niveau",
                 name:"Niveau",
                 component:Niveau
+            },
+            {
+                path:"Liste-de-classe/:id",
+                name:"ListeDeClasse",
+                component:ListeDeClasse
+            },
+            {
+                path:"Liste-de-matiere/:id",
+                name:"ListeDeMatiere",
+                component:ListeDeMatiere
             },
             {
                 path:"matieres",

@@ -10,7 +10,7 @@
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="">Selectionner le niveau</option>
+                          <option value="" selected disabled hidden>Selectionner le niveau</option>
                           <option v-for="item in gettersNiveau" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -21,7 +21,7 @@
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Selectionner la classe</option>
+                          <option value="" selected disabled hidden>Selectionner la classe</option>
                           <option v-for="item in AfficherClasse" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>

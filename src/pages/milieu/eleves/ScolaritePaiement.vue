@@ -10,7 +10,7 @@
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="" >Selectionner le niveau</option>
+                          <option value="" selected disabled hidden>Selectionner le niveau</option>
                           <option v-for="item in gettersNiveau" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -21,7 +21,7 @@
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Selectionner la classe</option>
+                          <option value="" selected disabled hidden>Selectionner la classe</option>
                           <option v-for="item in AfficherClasse" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -124,11 +124,14 @@
                         v-if="$v.formData.montant.$error && !$v.formData.montant.required"
                         role="alert"> champs obligatoire!
                     </span>
-                    
-                  <!-- <input v-model="formData.montant" @input="$v.formData.montant.$touch()" type="number"  class="form-control" id="scolarite" aria-describedby="emailHelp"
-                  placeholder="Entrer le scolarite"> -->
-                   <money   v-model="formData.montant" @input="$v.formData.montant.$touch()" 
-                type="text"   class="form-control" ></money> 
+                    <span style="color:red; font-style:italic;"
+                        v-if="formData.montant != '' && VerificationScolarite == false"
+                        role="alert"> Il reste {{ formatageSomme(parseFloat(ResteaPayer))}} à payer
+                    </span>
+                  <input v-model="formData.montant" @input="$v.formData.montant.$touch()" type="number"  class="form-control" id="scolarite" aria-describedby="emailHelp"
+                  placeholder="Entrer le scolarite">
+                   <!-- <money   v-model="formData.montant" @input="$v.formData.montant.$touch()" 
+                type="text"   class="form-control" ></money>  -->
               </div>
               <div class="form-group">
                   <label for="scolarite">Date de paiement </label>   
@@ -141,7 +144,7 @@
                   placeholder="Entrer le scolarite">
               </div>
 
-               <button   @click.prevent="AjouterFonctionLocal" type="submit" class="btn btn-primary ">Enrégistrer</button>
+               <button :disabled=" formData.montant != '' && VerificationScolarite == false"  @click.prevent="AjouterFonctionLocal" type="submit" class="btn btn-primary ">Enrégistrer</button>
                 &nbsp;
                 <button @click.prevent="annuler" type="submit" class="btn btn-warning">Annuler</button>
                 &nbsp;
@@ -161,7 +164,7 @@
 
 // import moment from "moment"
 import {mapGetters, mapActions} from "vuex";
-  import {Money} from 'v-money'
+  // import {Money} from 'v-money'
 
 import {required} from "vuelidate/lib/validators";
 import { formatageSommeSansFCFA,formatageSomme } from "@/Repositorie/Repository";
@@ -174,7 +177,7 @@ import { formatageSommeSansFCFA,formatageSomme } from "@/Repositorie/Repository"
 // }
 export default {
   components: { 
-    Money,
+    // Money,
    },
     data(){
         return{
@@ -238,6 +241,16 @@ export default {
      MontantTotalApayer(){
        return this.editText.scolarite;
      },
+        VerificationScolarite(){
+     if(this.formData.montant != ""){
+       let objet = parseInt(this.formData.montant)+ parseInt(this.sommeTotalPayer )
+       if(objet > parseInt(this.editText.scolarite)){
+         return false
+       }
+       return true
+     }
+     return ""
+   },
      ResteaPayer(){
        if(this.sommeTotalPayer != 0){
          return this.editText.scolarite - this.sommeTotalPayer;

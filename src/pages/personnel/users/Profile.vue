@@ -34,10 +34,8 @@
                       <h4>{{getterProfileUsers.name || 'Non renseigné'}}</h4>
                       <p class="text-secondary mb-1">{{LibelleRole(getterProfileUsers.role_id) || 'Non renseigné'}}</p>
                       <p class="text-muted font-size-sm"> {{getterProfileUsers.adresse || 'Non renseigné'}}</p>
-                      
                     <div class="col-sm-12">
                       <a class="btn btn-info "  @click.prevent="toggle" href="" >Plus de détail</a>
-                
                      </div>
                     </div>
                   </div>
@@ -46,7 +44,59 @@
              
             </div>
             <div class="col-md-8">
-              <div class="card mb-3">
+              <div class="card mb-3" v-if="getterProfileUsers.role_id == 4 && getterProfileUsers.matricule == null">
+               
+             
+                <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-2 ml-5">
+                        <i class="material-icons text-info mr-2"></i>Modifier le profile en renseignant le matricule de l'enfant 
+                       
+                      </h6>
+                     
+                      <div class="progress mb-4 ml-5" style="height: 8px">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                         
+                      
+            
+                    </div>
+                  </div>
+              </div>
+              <div class="card mb-3" v-else-if="getterProfileUsers.role_id == 4 && getterProfileUsers.matricule != null">
+               
+             
+                <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-2 ml-5">
+                        <i class="material-icons text-info mr-2"></i>Nom et prénom de l'enfant: 
+                        <span class="ml-2" style="font-size:20px;color:red;"> 
+                          {{NomPrenomEleve}} 
+                        </span> &nbsp; Matricule:  
+                        <span class="ml-2" style="font-size:20px;color:red;"> 
+                          {{NomPrenomEleveMatricule}} 
+                        </span>
+                      </h6>
+                     
+                      <div class="progress mb-4 ml-5" style="height: 8px">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                         
+                       <div class="row" style="margin-left:10%" v-if="Taille == true">
+                      <div class="col-sm-12" v-for="item in MatriculeEleve" :key="item.id" :value="item.matricule" >
+                        <a :disabled="getterProfileUsers.matricule ==''"  class="btn btn-success " href="" @click.prevent="InfoEleve(item.matricule)" >Voir notes élève</a> &nbsp;&nbsp;
+                        <a :disabled="getterProfileUsers.matricule ==''"  class="btn btn-info " href="" @click.prevent="InfoDetailEleve(item.matricule)" >Voir detail élève</a>
+                      </div>
+                    </div>
+                       <div class="row" style="margin-left:10%" v-else>
+                         <h5>Vérifier que vous avez saisi un bon matricule</h5>
+                         
+                    </div>
+            
+                    </div>
+                  </div>
+              </div>
+               <div class="card mb-3" v-else>
                
              
                 <div class="card h-100">
@@ -74,7 +124,7 @@
                           <td>{{index+1}}</td>
                           <td>{{LibelleTrimestre(item.trimestre_id)}}</td>
                           <td>{{classe(item.classe_id)}}</td>
-                          <td>{{LibMatiere(item.matiere_id)}}</td>                        
+                          <td>{{LibelleMatiere(MatiereId(item.matiere_id))}}</td>                        
                          <!-- <td >                   
                          <a title="Modifier"  @click.prevent="ModificationModal(item.id)">
                             <i style="color:green;" class="fas fa-edit"> </i>                      
@@ -111,18 +161,18 @@
                     </div>
                   </div>
               </div>
-
             </div>
         <Drawer @close="annuler" align="right" :closeable="true" style="background-color:#fff">
       <div v-if="open" class="ModalStyle">
          
-         <div class="card-body" style="width:500px !important;">
+         <div class="card-body" style="width:500px !important;" v-for="item in UserInfo(getterProfileUsers.id)" :key="item.id" >
                   <div class="row">
+                   
                     <div class="col-sm-4">
                       <h6 class="mb-0">Nom et Prenom</h6>
                     </div>
                     <div class="col-sm-8">
-                      {{getterProfileUsers.name || "Non renseigné"}}
+                      {{item.name || "Non renseigné"}}
                     </div>
                   </div>
                   <hr>
@@ -131,7 +181,7 @@
                       <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-8">
-                     {{getterProfileUsers.email || "Non renseigné"}}
+                     {{item.email || "Non renseigné"}}
                     </div>
                   </div>
                   <hr>
@@ -140,31 +190,31 @@
                       <h6 class="mb-0">Mobile</h6>
                     </div>
                     <div class="col-sm-8">
-                      {{getterProfileUsers.phone || "Non renseigné"}}
+                      {{item.phone || "Non renseigné"}}
                     </div>
                   </div>
-                  <!-- <hr> -->
-                  <!-- <div class="row">
+                  <hr v-if=" item.matricule != null">
+                  <div class="row" v-if=" item.matricule != null">
                     <div class="col-sm-4">
-                      <h6 class="mb-0">Mobile</h6>
+                      <h6 class="mb-0">Matricule enfant</h6>
                     </div>
                     <div class="col-sm-8">
-                      {{getterProfileUsers.mobile || 'Non renseigné'}}
+                      {{item.matricule || 'Non renseigné'}}
                     </div>
-                  </div> -->
+                  </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
                       <h6 class="mb-0">Addresse</h6>
                     </div>
                     <div class="col-sm-8">
-                       {{getterProfileUsers.adresse || 'Non renseigné'}}
+                       {{item.adresse || 'Non renseigné'}}
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " href="" @click.prevent="UpdateProfile(getterProfileUsers.id)">Modifier le profile</a>
+                      <a class="btn btn-info " href="" @click.prevent="UpdateProfile(item.id)">Modifier le profile</a>
                       &nbsp;&nbsp;
                       <a class="btn btn-warning pl-3 pr-3" href="" @click.prevent="annuler">Fermer</a>
                     </div>
@@ -172,63 +222,7 @@
                 </div> 
       </div>
     </Drawer>
-              <!-- <div class="row gutters-sm">
-                <div class="col-sm-12 mb-3">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3 ml-5">
-                        <i class="material-icons text-info mr-2"></i>Liste des classe(s) et matière(s) affectée(s)</h6>
-                     
-                      <div class="progress mb-3 ml-5" style="height: 5px">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      
-                <div class="table-responsive ml-3">
-                  <table class="table " v-if="ListeAffectation.length !=0">
-                    <thead class="thead-light">
-                      <tr >
-                        <th>N°</th>
-                        <th>Trimestre</th>
-                        <th>Classe</th>
-                        <th>Matières</th>                                        
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, index) in ListeAffectation" :key="item.id" :value="item.id">
-                          <td>{{index+1}}</td>
-                          <td>{{LibelleTrimestre(item.trimestre_id)}}</td>
-                          <td>{{classe(item.classe_id)}}</td>
-                          <td>{{LibMatiere(item.matiere_id)}}</td>                        
-                        
-                      </tr>                                                         
-                    </tbody>
-                  </table>
-                  <table class="table align-items-center table-flush" v-else>
-                    <thead class="thead-light">
-                      <tr >
-                        <th>N°</th>
-                        <th>Trimestre</th>
-                        <th>Classe</th>
-                        <th>Matières</th>                                        
-                        <th  colspan="2" >Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <td colspan="5">
-                          
-                       <h6 style="color:red">Aucune affectation ne vous été atribuée pour l'instant</h6>
-                        </td>
-                                                                          
-                    </tbody>
-                  </table>
-                </div>
-                    
-            
-                    </div>
-                  </div>
-                </div>
-               
-              </div> -->
+             
 
               <div class="row gutters-sm">
                 <div class="col-sm-12 mb-3">
@@ -357,6 +351,7 @@
           innerOpen: false,
           align: "right",
            open: false,
+           UserId:''
       }
 
       // this.getUser().then(res => {
@@ -390,21 +385,61 @@
       this.getClasse();
         this.getTrimestre();
       this.getMatiere();
-          
+       this.get_note();
+        this.getNouvelleMatiere();
+      this.get_all_student();
+      this.getUtilisateur()
           
         },
 
     computed: {
           ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersMatiere","gettersTrimestre", "gettersAnne",
-     "gettersTransport"]),
-      
-          ...mapGetters('personnel', ['getterProfileUsers', "gettersRole", "gettersAffectation", "gettersloadingUser"]),
+     "gettersTransport","gettersNouvelleMatiere"]),
+           ...mapGetters("student",["GetterStudent", "GetterNote"]),
+
+          ...mapGetters('personnel', ['getterProfileUsers', "gettersRole", "gettersAffectation", "gettersloadingUser","gettersUtilisateur"]),
 
    loadingData(){
     return this.gettersloadingUser
        
     },
 
+   UserInfo(){
+     return (id)=>{
+       if(id != "" && id != null){
+         let objet = this.gettersUtilisateur.find(tem=>tem.id == id)
+         if(objet){
+           return [objet]
+         }
+       }
+     }
+      },
+      Taille(){
+        let objet = this.GetterStudent.find(tem=>tem.matricule == this.getterProfileUsers.matricule)
+        if(objet == undefined){
+          return false
+        }else if([objet].length ==1){
+          return true
+        }
+        return false
+      },
+   MatriculeEleve(){
+        return [this.GetterStudent.find(tem=>tem.matricule == this.getterProfileUsers.matricule)]
+      },
+   NomPrenomEleve(){
+        let objet = this.GetterStudent.find(tem=>tem.matricule == this.getterProfileUsers.matricule)
+        if(objet){
+          return objet.nom+" "+objet.prenom
+        }
+        return ""
+      },
+   NomPrenomEleveMatricule(){
+        let objet = this.GetterStudent.find(tem=>tem.matricule == this.getterProfileUsers.matricule)
+        if(objet){
+          return objet.matricule
+        }
+        return ""
+      },
    ListeAffectation(){
         return this.gettersAffectation.filter(tem=>tem.teacher_id == this.getterProfileUsers.id)
       },
@@ -442,6 +477,26 @@
          }
        }
      },
+      LibelleMatiere(){
+       return (id)=>{
+         if(id != ""){
+           let obj = this.gettersNouvelleMatiere.find(tem=>tem.id == id)
+           if(obj){
+             return obj.libelle;
+           }
+         }
+       }
+     },
+     MatiereId(){
+       return (id)=>{
+         if(id != ""){
+           let obj = this.gettersMatiere.find(tem=>tem.id == id)
+           if(obj){
+             return obj.nouvelle_matiere_id;
+           }
+         }
+       }
+     },
       LibMatiere(){
        return (id)=>{
          if(id != "" && id != null){
@@ -460,9 +515,9 @@
         methods: {
                  ...mapActions("parametres",["getTrimestre","getNiveau","AjouterNiveau", "ModifierNiveau","SupprimerNiveau",
          "getClasse", "getMatiere", "getAnnee", "AjouterMessageEmail", "AjouterMessageSms", "AjouterTransport",
-         "getTransport"]),
-        
-              ...mapActions('personnel', ['getUserProfile','changePassword',"getRole", "getAffectation"]),
+         "getTransport","getNouvelleMatiere"]),
+        ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","get_note"]),
+              ...mapActions('personnel', ['getUserProfile','changePassword',"getRole", "getAffectation","getUtilisateur"]),
 
                  toggle(){
                     this.open = !this.open
@@ -527,6 +582,17 @@ addFichierPDF(file) {
                 reader.readAsDataURL(file);
             },
            
+
+            InfoEleve(index){
+             this.$router.push({
+                name:'InfoEleve', params:{id: index}
+              })
+            },
+            InfoDetailEleve(index){
+             this.$router.push({
+                name:'DetailParentEleve', params:{id: index}
+              })
+            },
 
             UpdateProfile(index){
              this.$router.push({

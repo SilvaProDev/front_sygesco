@@ -116,7 +116,7 @@
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" :disabled="formData.mois != ''">
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden>Selectionner le niveau</option>
                           <option v-for="item in gettersNiveau" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -127,7 +127,7 @@
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id" :disabled="formData.mois != ''" >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden>Selectionner la classe</option>
                           <option v-for="item in AfficherClasse" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -149,7 +149,7 @@
                       <label for="niveau">Mois </label>
                       
                         <select class="form-control" id="classe" v-model="formData.mois"  >
-                         <option value="" selected >Choisir le Mois</option>
+                         <option value="" selected disabled hidden >Choisir le Mois</option>
                           <option value="01">Janvier</option>
                           <option value="02">Février</option>
                           <option value="03">Mars</option>
@@ -190,8 +190,8 @@
                         <th>Prénoms</th>
                         <th>Matricule</th>
                         <th>Classe</th>
-                        <th>Montant</th>
                         <th>Date de paiement</th>  
+                        <th>Montant</th>
                       </tr>
                     </thead>
                    

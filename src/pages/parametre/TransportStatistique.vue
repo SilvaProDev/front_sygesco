@@ -120,7 +120,7 @@
                       <label for="niveau">Par trimestre </label>
                       
                         <select class="form-control" id="classe" v-model="formData.trimestre"  >
-                         <option value="" selected >Choisir le Mois</option>
+                         <option value="" selected  disabled hidden>Choisir le Mois</option>
                          <option v-for="item in gettersTrimestre" :key="item.id" :value="item.id"  >{{item.libelle}}</option>
                          
                                           

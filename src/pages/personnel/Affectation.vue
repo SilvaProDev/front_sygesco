@@ -67,7 +67,7 @@
                         </span> 
                       <select multiple class="form-control" id="exampleFormControlSelect2" 
                       @input="$v.formData.matiere_id.$touch()" v-model="formData.matiere_id">
-                       <option v-for="item in AfficherMatiere" :key="item.id" :value="item.id"> {{item.libelle}} </option>
+                       <option v-for="item in AfficherMatiere" :key="item.id" :value="item.id"> {{LibelleMatiere(item.nouvelle_matiere_id)}} </option>
                       
                       </select>
                     </div>
@@ -110,7 +110,7 @@
                           <td>{{index+1}}</td>
                           <td>{{LibelleTrimestre(item.trimestre_id)}}</td>
                           <td>{{classe(item.classe_id)}}</td>
-                          <td>{{LibMatiere(item.matiere_id)}}</td>                        
+                          <td>{{LibelleMatiere(MatiereId(item.matiere_id))}}</td>                        
                          <td >                   
                          <a title="Modifier"  @click.prevent="ModificationModal(item.id)">
                             <i style="color:green;" class="fas fa-edit"> </i>                      
@@ -177,6 +177,7 @@ export default {
       this.getMatiere();
       this.get_all_student();
       this.getRole();
+       this.getNouvelleMatiere();
      this.getUtilisateur();
      this.getAffectation();
 
@@ -196,7 +197,7 @@ export default {
 },
     computed:{
      ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersMatiere","gettersTrimestre", "gettersAnne",
-     "gettersTransport"]),
+     "gettersTransport","gettersNouvelleMatiere"]),
      ...mapGetters("student",["GetterStudent", "GetterCantine", "GetterScolarite", "GetterAbsence"]),
      ...mapGetters("personnel",["gettersUtilisateur", "gettersAffectation","gettersloadingAffectation","gettersRole"]),
 
@@ -204,6 +205,26 @@ export default {
     return this.gettersloadingAffectation
        
     },
+     LibelleMatiere(){
+       return (id)=>{
+         if(id != ""){
+           let obj = this.gettersNouvelleMatiere.find(tem=>tem.id == id)
+           if(obj){
+             return obj.libelle;
+           }
+         }
+       }
+     },
+     MatiereId(){
+       return (id)=>{
+         if(id != ""){
+           let obj = this.gettersMatiere.find(tem=>tem.id == id)
+           if(obj){
+             return obj.nouvelle_matiere_id;
+           }
+         }
+       }
+     },
       ListeAffectation(){
         return this.gettersAffectation.filter(tem=>tem.teacher_id == this.$route.params.id)
       },
@@ -276,7 +297,7 @@ export default {
 
          ...mapActions("parametres",["getTrimestre","getNiveau","AjouterNiveau", "ModifierNiveau","SupprimerNiveau",
          "getClasse", "getMatiere", "getAnnee", "AjouterMessageEmail", "AjouterMessageSms", "AjouterTransport",
-         "getTransport"]),
+         "getTransport","getNouvelleMatiere"]),
          ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","get_Liste_Cantine",
          "SupprimerCantine", "getAbsence", "AjouterAbsence", "AjouterCantine", "getScolarite", "AjouterScolarite"]),
         

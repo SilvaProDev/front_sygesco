@@ -85,7 +85,7 @@
                          
                         </a>
                             &nbsp;
-                        <a title="Affectation" v-if="item.role_id == 1"  @click.prevent="AffectationRoute(item.id)">
+                        <a title="Affectation" v-if="item.role_id == 3"  @click.prevent="AffectationRoute(item.id)">
                          <i style="color:green;" class="fas fa-eye"></i>
                         </a>
                             &nbsp;
@@ -166,7 +166,7 @@
                          
                         </a>
                             &nbsp;
-                        <a title="Affectation" v-if="item.role_id == 2"  @click.prevent="AffectationRoute(item.id)">
+                        <a title="Affectation" v-if="item.role_id == 3"  @click.prevent="AffectationRoute(item.id)">
                          <i style="color:green;" class="fas fa-eye"></i>
                         </a>
                             &nbsp;
@@ -249,7 +249,7 @@
                          
                         </a>
                             &nbsp;
-                        <a title="Affectation" v-if="item.role_id == 1"  @click.prevent="AffectationRoute(item.id)">
+                        <a title="Affectation" v-if="item.role_id == 3"  @click.prevent="AffectationRoute(item.id)">
                          <i style="color:green;" class="fas fa-eye"></i>
                         </a>
                             &nbsp;
@@ -677,6 +677,7 @@ export default {
 created(){
     this.getRole();
      this.getUtilisateur()
+     
 },
  computed:{
      ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersMatiere","gettersTrimestre", "gettersAnne",
@@ -733,7 +734,7 @@ created(){
    
      },
      ListeDesProfesseurs(){
-        let objet = this.gettersUtilisateur.filter(tem=>tem.role_id == 2);    
+        let objet = this.gettersUtilisateur.filter(tem=>tem.role_id == 3);    
         let array_exercie = [];
         if (objet.length > 0) {
           objet.forEach(function (val) {
@@ -751,7 +752,7 @@ created(){
    
      },
      ListeDesParents(){
-        let objet = this.gettersUtilisateur.filter(tem=>tem.role_id == 5);    
+        let objet = this.gettersUtilisateur.filter(tem=>tem.role_id == 4);    
         let array_exercie = [];
         if (objet.length > 0) {
           objet.forEach(function (val) {

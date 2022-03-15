@@ -9,7 +9,12 @@
         <h2>Detail de l'eleve</h2>
       <hr>
         <button type="button" class="btn btn-primary" @click.prevent="genererEnPdf()"
-        v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1">Imprimer</button>
+        v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==4">Imprimer
+        </button>
+        &nbsp;&nbsp;
+        <button type="button" class="btn btn-success" @click.prevent="retour()"
+        v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==4">Retour
+        </button>
         <!-- &nbsp;
         <button type="button" class="btn btn-secondary">Nouvelle Photo</button> -->
         &nbsp;
@@ -29,7 +34,7 @@
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1">Note </button>
         &nbsp;
         <button type="button" class="btn btn-primary"  @click.prevent="BulletinEleve(editText.id)"
-        v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1">Bulletin</button>
+        v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==4">Bulletin</button>
          &nbsp;
         <button type="button" class="btn btn-danger"  @click.prevent="ShowModal(editText.id)"
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1"> Payer la cantine</button> <br><br>
@@ -42,7 +47,7 @@
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1">Payer le transport</button> 
         <hr>
         
-        <h5>INFORMATION GENERALE DE L'ELEVE</h5>
+        <h5>INFORMATION GENERALE DE L'ELEVE</h5> 
         <div id="printMe" ref="table" style="!important" class="col">
             <div class="row" id="printMe">
               <div class="col-md-6">
@@ -426,7 +431,7 @@
               <form>
         
                <div class="form-group">
-                  <label for="matiere">Montant total à payer   </label> 
+                  <label for="matiere">Montant total à payer </label> 
                         <!-- <money title="Scolarité totale a payer"  :value="ScolariteEleve"  class="form-control" readonly></money>                  -->
                   <input disabled :value="formatageSomme(parseFloat(editText.scolarite))"   type="text"  class="form-control" id="libelle" aria-describedby="emailHelp">
                   
@@ -442,16 +447,11 @@
                         v-if="$v.Scolarites.montant.$error && !$v.Scolarites.montant.required"
                         role="alert"> champs obligatoire!
                     </span>
-                   <span style="color:red; font-style:italic;"
-                        v-if="Scolarites.montant != '' && VerificationScolarite == false"
-                        role="alert"> Il reste {{ formatageSomme(parseFloat(ResteTotalApayerParEleve))}} à payer
-                    </span>
                     
-                  <input v-model="Scolarites.montant" @input="$v.Scolarites.montant.$touch()" type="number"  class="form-control" id="scolarite" aria-describedby="emailHelp"
-                  placeholder="Entrer le scolarite">
-                <!-- <money title="Scolarité totale a payer"  v-model="Scolarites.montant" @input="$v.Scolarites.montant.$touch()" 
-                type="text"   class="form-control" ></money>  -->
-               
+                  <!-- <input v-model="Scolarites.montant" @input="$v.Scolarites.montant.$touch()" type="number"  class="form-control" id="scolarite" aria-describedby="emailHelp"
+                  placeholder="Entrer le scolarite"> -->
+                <money title="Scolarité totale a payer"  v-model="Scolarites.montant" @input="$v.Scolarites.montant.$touch()" 
+                type="text"   class="form-control" ></money> 
               </div>
               <div class="form-group">
                   <label for="scolarite">Date de paiement </label>   
@@ -464,7 +464,7 @@
                   placeholder="Entrer le scolarite">
               </div>
               
-              <button :disabled=" Scolarites.montant != '' && VerificationScolarite == false"  @click.prevent="AjoutScolarite" type="submit" class="btn btn-primary ml-5">Valider</button>
+              <button   @click.prevent="AjoutScolarite" type="submit" class="btn btn-primary ml-5">Valider</button>
               &nbsp;
               <button @click.prevent="annulerScolarite" type="submit" class="btn btn-warning">Annuler</button>
               &nbsp;
@@ -630,7 +630,7 @@ export default {
     },
 
     created(){
-        this.editText = this.GetterStudent.find(tem =>tem.id == this.$route.params.id)
+        this.editText = this.GetterStudent.find(tem =>tem.matricule == this.$route.params.id)
         console.log( this.editText)
     if(this.gettersClasse.length == 0){
       this.getClasse();
@@ -739,7 +739,6 @@ export default {
    ScolariteEleve(){
      return this.editText.scolarite;
    },
- 
 
   trimestreId(){
        if( this.Transports.paye_par_annee == 'NON' && this.Transports.paye_par_mois != ''){
@@ -768,17 +767,6 @@ export default {
      FiltreParAbsence(){
        return this.GetterAbsence.filter(tem=>tem.student_id == this.$route.params.id)
      },
-   
-       VerificationScolarite(){
-     if(this.Scolarites.montant != ""){
-       let objet = parseInt(this.Scolarites.montant)+ parseInt(this.sommeTotalScolariteParEleve )
-       if(objet > parseInt(this.editText.scolarite)){
-         return false
-       }
-       return true
-     }
-     return ""
-   },
      ResteTotalApayerParEleve(){
        return this.editText.scolarite - this.sommeTotalScolariteParEleve
      },
@@ -808,7 +796,7 @@ export default {
      },
 
      ScolariteParEleve(){
-        let objet = this.GetterScolarite.filter(tem=>tem.student_id == this.$route.params.id)
+        let objet = this.GetterScolarite.filter(tem=>tem.student_id == this.editText.id)
 
         let array_exercie = []
         if (objet.length > 0) {
@@ -1216,6 +1204,10 @@ export default {
             this.Transports.montant="",
             this.Transports.paye_par_mois="",
             this.Transports.paye_par_annee=""
+        },
+
+        retour(){
+          this.$router.go(-1)
         },
 
          formaterDate1(date) {

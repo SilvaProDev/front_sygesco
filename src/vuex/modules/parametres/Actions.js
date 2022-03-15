@@ -454,6 +454,55 @@ export function SupprimerMessageSms({ commit }, id) {
       })
   }
 
+  //ACTION DE SMS
+
+  export const getBilan = ({commit})=>{
+    Api.get('/bilan').then(resp =>{
+        commit("GET_ALL_BILAN", resp.data)
+    }).catch(error =>console.log(error));
+}
+
+export const AjouterBilan = ({commit, dispatch}, objet)=>{
+    asyncLoading(Api.post('/bilan', objet))
+       .then(resp =>{
+           
+               commit("AJOUTER_BILAN", resp.data);
+           
+            dispatch("getBilan")
+               
+            Vue.notify({
+              title: 'Success',
+              text: "L'enrégistrement à été Effectué avec Succès!",
+              type: "success"
+            })
+              
+            
+       }).catch(error =>console.log(error));
+}
+export const ModifierBilan = ({commit}, objet)=>{
+    asyncLoading(Api.put('/bilan/'+ objet.id,objet)).then(resp =>{
+           commit("MODIFIER_BILAN", resp.data)
+           Vue.notify({
+            title: 'Success',
+            text: 'La modification a été Effectué avec Succès!',
+            type: "success"
+          })
+           
+       }).catch(error =>console.log(error));
+}
+
+
+//Suppression
+export function SupprimerBilan({ commit }, id) {
+
+    this.$app.$dialog
+      .confirm("Voulez vouz vraiment supprimer ?")
+      .then(dialog => {
+        commit('SUPPRIMER_BILAN', id)
+        Api.delete('/bilan/' + id,).then(() => dialog.close())
+      })
+  }
+
 
   //ACTION DE TRANSPORT
   export const getTransport = ({commit})=>{
@@ -508,8 +557,10 @@ export function SupprimerTransport({ commit }, id) {
 
   //ACTION DE L ENTETE
   export const getconfigEntete = ({commit})=>{
+    commit("SET_LOADING_ENTETE", true)
     Api.get('/config-entete').then(resp =>{
         commit("GET_CONFIG_ENTETE", resp.data)
+        commit("SET_LOADING_ENTETE", false)
     }).catch(error =>console.log(error));
 }
 

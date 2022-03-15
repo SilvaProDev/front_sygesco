@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loader :isVisible="loadingData"/>
      <div class="ml-5">
         <div class="row ml-5">         
 
@@ -13,10 +14,9 @@
                   </div>
                 </div>
               
-               {{teacherName(teacherId(5))}}
                <!-- {{testMoiAussi(8, 10)}} -->
-               <!-- {{NoteGoupeMatiere1}} -->
-               <!-- {{ResteMoi1}} -->
+               <!-- {{SomParMatiere(3)}}
+               {{MatiereParStudent(3)}} -->
                 
            <p v-if="formData.trimestre_id == ''" class=" ml-5 text-gray-800 font-weight-bold"> Selectionnez  le trimestre pour voir le bulletin</p>
                 <div style="margin-left:80%" v-if="formData.trimestre_id != ''">
@@ -61,21 +61,24 @@
                             </span>
                         </th> 
                     </tr>
-                    <tr>
+                    <tr v-for="item in gettersconfigEntete" :key="item.id">
                         <td colspan="4">
                             
                         <img src="/front/img/Armoiries.png" width="70px;"  />       
 
-                            <span>Etablissement :</span> <span>LYCEE MODERNE KORHOGO</span> <br> &nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <span>Adresse :</span> <span> KORHOGO</span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>Etablissement :</span><span >{{item.nom}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                <span>Logo:</span> <span >
+                                    <img :src="item.photo" alt="" style="width:50px;">
+                                    </span> <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  <span>Situation :</span><span >{{item.adresse}}</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                            
-                              <span>Téléthone:</span><span>+225 07 07 46 16 08</span>
+                              <span>Téléthone:</span><span >{{item.contact}}</span>
                         </td>
                        
-                        <td colspan="3">
-                            <span>Code</span>: <span>00985</span> <br>
-                            <span>Statut</span>: <span>Public</span>
+                        <td colspan="3"  >
+                            <span>Code</span>: <span>{{item.code}}</span> <br>
+                            <span>Statut</span>: <span>{{item.statut}}</span>
                         </td>
                     </tr>
                     <tr>
@@ -156,12 +159,15 @@
                         <td style="padding:0px; text-align:center;">9</td>   
                     </tr> -->
                     <tr v-for="item in MatiereLitteraire" :key="item.id"> 
-                        <td style="padding:0px; color:#000 !important;font-weight:bold">{{item.libelle}}</td>
+                        <td style="padding:0px; color:#000 !important;font-weight:bold">{{LibelleMatieres(item.nouvelle_matiere_id)}}</td>
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id) || 0 }}</td>   
                         <td style="padding:0px; text-align:center;">{{item.coefficient}}</td>   
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id) * (item.coefficient)}}</td>   
-                        <td style="padding:0px; text-align:center;" v-if="testMoiAussi(item.id, SomParMatiere(item.id))==1">
+                        <td style="padding:0px; text-align:center;" v-if="testMoiAussi(item.id, SomParMatiere(item.id)) ==1">
                            {{testMoiAussi(item.id, SomParMatiere(item.id))+"er(ère)"}}
+                           </td>   
+                        <td style="padding:0px;" v-else-if="testMoiAussi(item.id, SomParMatiere(item.id)) == -1">
+                           {{"Non classé"}}
                            </td>   
                         <td style="padding:0px; text-align:center;" v-else>
                            {{testMoiAussi(item.id, SomParMatiere(item.id))+"ème"}}
@@ -195,13 +201,16 @@
                    
 
                      <tr v-for="item in MatiereScience" :key="item.id">
-                        <td style="padding:0px; color:#000 !important;font-weight:bold">{{item.libelle}}</td>
+                        <td style="padding:0px; color:#000 !important;font-weight:bold">{{LibelleMatieres(item.nouvelle_matiere_id)}}</td>
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id)}}</td>   
                         <td style="padding:0px; text-align:center;">{{item.coefficient}}</td>   
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id) * (item.coefficient)}}</td>   
                         <td style="padding:0px; text-align:center;" v-if="testMoiAussi(item.id, SomParMatiere(item.id))==1">
                            {{testMoiAussi(item.id, SomParMatiere(item.id))+"er(ère)"}}
                            </td>   
+                            <td style="padding:0px;" v-else-if="testMoiAussi(item.id, SomParMatiere(item.id))== -1">
+                           {{"Non classé"}}
+                           </td>
                         <td style="padding:0px; text-align:center;" v-else>
                            {{testMoiAussi(item.id, SomParMatiere(item.id))+"ème"}}
                            </td>                         <td style="padding:0px; text-align:center;">
@@ -232,7 +241,7 @@
                         
                     </tr>
                      <tr v-for="item in MatiereAutre" :key="item.id">
-                        <td style="padding:0px;color:#000 !important;font-weight:bold">{{item.libelle}}</td>
+                        <td style="padding:0px;color:#000 !important;font-weight:bold">{{LibelleMatieres(item.nouvelle_matiere_id)}}</td>
                         <td style="padding:0px; text-align:center;">{{SomParMatiere(item.id)}}</td>   
                         <td style="padding:0px; text-align:center;">
                           <span v-if="MoyennePArMatiere(item.id) !=0">{{item.coefficient}} </span>
@@ -242,6 +251,9 @@
                          <td style="padding:0px; text-align:center;" v-if="testMoiAussi(item.id, SomParMatiere(item.id))==1">
                            {{testMoiAussi(item.id, SomParMatiere(item.id))+"er(ère)"}}
                            </td>   
+                            <td style="padding:0px;" v-else-if="testMoiAussi(item.id, SomParMatiere(item.id))== -1">
+                           {{"Non classé"}}
+                           </td>
                         <td style="padding:0px; text-align:center;" v-else>
                            {{testMoiAussi(item.id, SomParMatiere(item.id))+"ème"}}
                            </td> 
@@ -1024,13 +1036,15 @@ export default {
     this.getUtilisateur();
     this.getAffectation();
      this.getMatiere();
+      this.getNouvelleMatiere();
      this.getTransport();
      this.getAbsence();
       this.getNiveau();
       this.getTrimestre();
       this.get_all_student();
       this.get_Liste_Cantine();
-       this.getScolarite();
+       this.getScolarite()
+         this.getconfigEntete();
       this.getAnnee();
     },
 
@@ -1044,10 +1058,14 @@ export default {
      },
      computed:{
      ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersMatiere","gettersTrimestre", "gettersAnne",
-     "gettersTransport"]),
+     "gettersTransport","gettersNouvelleMatiere","gettersconfigEntete","gettersloadingconfigEntete"]),
      ...mapGetters("student",["GetterStudent", "GetterCantine", "GetterScolarite", "GetterAbsence","GetterNote"]),
          ...mapGetters("personnel",["gettersUtilisateur", "gettersAffectation","gettersloadingAffectation","gettersRole"]),
    
+     loadingData(){
+    return this.gettersloadingconfigEntete
+       
+    },
   MatiereLitteraire(){
     return this.gettersMatiere.filter(tem=>tem.statut == 1 && tem.classe_id == this.editText.classe_id)
   },
@@ -1057,6 +1075,16 @@ export default {
   MatiereAutre(){
     return this.gettersMatiere.filter(tem=>tem.statut == 3 && tem.classe_id == this.editText.classe_id)
   },
+      LibelleMatieres(){
+       return (id)=>{
+         if(id != "" && id != null){
+           let obj =this.gettersNouvelleMatiere.find(tem =>tem.id == id)
+           if(obj){
+             return obj.libelle;
+           }
+          return ""
+         }}
+     },
 
   teacherId(){
     return (id)=>{
@@ -2371,8 +2399,12 @@ export default {
           let objet = this.MatiereParStudent(id1).lastIndexOf(id2)
           if(objet == 0){
             return this.MatiereParStudent(id1).length
+          }else if(objet == undefined){
+            return 0
           }
           return objet
+        }else if(id1 != "" && id2 ==0){
+          return -1
         }
       }
      },
@@ -2385,6 +2417,8 @@ export default {
         if (objet.length > 0) {
           let array1 = [];
           let array2 = [];
+          let array3 = [];
+          // let array4 = [];
           objet.forEach(function (val) {
             if(val.student_id ==1){
               array1.push(val.note); 
@@ -2392,9 +2426,17 @@ export default {
             if(val.student_id ==2){
               array2.push(val.note); 
             }
+            if(val.student_id ==3){
+              array3.push(val.note); 
+            }
+            // if(val.student_id ==4){
+            //   array4.push(val.note); 
+            // }
           });
           let unique1 = array1;      
           let unique2 = array2;      
+          let unique3 = array3;      
+          // let unique4 = array4;      
          if (unique1.length == 0) {return [];}
          else{
            let test1 = unique1.map(Number).reduce(function(a,b){
@@ -2410,12 +2452,38 @@ export default {
            }, 0);
 
             note1.push(Math.round(test2/unique2.length))
+            // note1 = note1.sort(function(a,b){
+            //   return a-b
+            // })
+
+            // return note1
+         }
+         if (unique3.length == 0) {return [];}
+         else{
+           let test3 = unique3.map(Number).reduce(function(a,b){
+             return (a +b);
+           }, 0);
+
+            note1.push(Math.round(test3/unique3.length))
             note1 = note1.sort(function(a,b){
               return a-b
             })
 
             return note1
          }
+        //  if (unique4.length == 0) {return [];}
+        //  else{
+        //    let test4 = unique4.map(Number).reduce(function(a,b){
+        //      return (a +b);
+        //    }, 0);
+
+        //     note1.push(Math.round(test4/unique4.length))
+        //     note1 = note1.sort(function(a,b){
+        //       return a-b
+        //     })
+
+        //     return note1
+        //  }
         } 
         return 0;
              
@@ -5016,7 +5084,7 @@ CoeffecientTotal(){
 
          ...mapActions("parametres",["getTrimestre","getNiveau","AjouterNiveau", "ModifierNiveau","SupprimerNiveau",
          "getClasse", "getMatiere", "getAnnee", "AjouterMessageEmail", "AjouterMessageSms", "AjouterTransport",
-         "getTransport"]),
+         "getTransport", 'getNouvelleMatiere',"getconfigEntete"]),
          ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","get_Liste_Cantine",
          "SupprimerCantine", "getAbsence", "AjouterAbsence", "AjouterCantine", "getScolarite", "AjouterScolarite",
          "get_note"]),

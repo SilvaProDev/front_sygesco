@@ -68,6 +68,21 @@
 
                     
                 </div>
+                 <div class="col-6 col-md-3">
+                    <div class="form-group">                     
+                        <label for="email">Code établissement </label>
+                        <span style="color:red; font-style:italic;"
+                            v-if="$v.formData.code.$error && !$v.formData.code.required"
+                            role="alert">
+                            <span style="color:red;">*</span> &nbsp;
+                            Ce champs est obligatoire!
+                        </span> 
+                            <input  type="text" class="form-control" id="email" aria-describedby="email"
+                            placeholder="Entrer le code" @input="$v.formData.code.$touch()" v-model="formData.code">
+                        </div>
+
+                    
+                </div>
                
                
             </div>
@@ -102,6 +117,21 @@
                     accept="image/png, image/jpeg, image/jpg">
                 </div>
                 </div>
+                 <div class="col-6 col-md-3">
+                    <div class="form-group">                     
+                    <label for="email">Statut établissement </label>
+                    <span style="color:red; font-style:italic;"
+                        v-if="$v.formData.statut.$error && !$v.formData.statut.required"
+                        role="alert">
+                        <span style="color:red;">*</span> &nbsp;
+                        Ce champs est obligatoire!
+                    </span> 
+                        <input  type="text" class="form-control" id="email" aria-describedby="email"
+                        placeholder="Entrer le statut" @input="$v.formData.statut.$touch()" v-model="formData.statut">
+                    </div>
+
+                    
+                </div>
             </div> <br> 
 
             <button :disabled="gettersconfigEntete.length !=0"   @click.prevent="AjouterFonctionLocal" type="submit" class="btn btn-primary ml-5">Enrégistrer</button>
@@ -135,8 +165,8 @@
                 <div class="col-md-4">
                         <h3> {{item.nom}} </h3>
                     <span> <span style="color:#000;font-weight:600; font-size:15px;"> {{item.slogan}}</span>  </span> <br>
-                    <span> <span style="color:#000;font-weight:600; font-size:15px;"> Adresse: </span>{{item.adresse}}</span> <br> 
-                    <span> <span style="color:#000;font-weight:600; font-size:15px;"> Contact: </span>{{item.contact}}</span> <br> 
+                    <span> <span style="color:#000;font-weight:600; font-size:15px;"> Situation: </span>{{item.adresse}}</span> <br> 
+                    <span> <span style="color:#000;font-weight:600; font-size:15px;"> Téléphone: </span>{{item.contact}}</span> <br> 
                     <span> <span style="color:#000;font-weight:600; font-size:15px;"> Email: </span> {{item.email}} </span> <br>
                     <span> <span style="color:#000;font-weight:600; font-size:15px;"> Site web: </span> {{item.site}} </span> 
                    
@@ -181,6 +211,8 @@ created(){
             
             nom:{required},
             slogan:{required},
+            code:{required},
+            statut:{required},
             adresse:{required},
             contact:{required},
             email:{required},
@@ -235,6 +267,8 @@ created(){
        const formData = new FormData();
         formData.append("file", this.selectedFile, this.selectedFile.name);
         formData.append("nom", this.formData.nom);
+        formData.append("code", this.formData.code);
+        formData.append("statut", this.formData.statut);
         formData.append("contact", this.formData.contact);
         formData.append("email", this.formData.email);
         formData.append("adresse", this.formData.adresse);
@@ -242,6 +276,7 @@ created(){
         formData.append("site", this.formData.site);
         console.log(formData)
         this.AjouterconfigEntete(formData, config);
+        this.annuler()
         },
 
 
@@ -252,6 +287,8 @@ created(){
              this.formData.slogan="",  
              this.formData.email=""
              this.formData.contact=""
+             this.formData.code=""
+             this.formData.statut=""
              this.formData.site=""
            
           },

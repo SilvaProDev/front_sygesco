@@ -68,7 +68,7 @@
                
               </div>
             </li>
-             <li class="nav-item dropdown no-arrow" style="margin-right:80px;" v-if=" getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==2">
+             <li class="nav-item dropdown no-arrow" style="margin-right:80px;" v-if=" getterProfileUsers.length !=0">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <!-- <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px"> -->

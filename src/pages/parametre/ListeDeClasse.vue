@@ -2,8 +2,10 @@
   <div>
 
     <Entete/>
-   
         <div class="container ml-5">
+          <div style="margin-left:100%">
+                     <button type="button" class="btn btn-info" @click.prevent="Retour()">Retour</button> &nbsp;
+                </div>
           <div class="row">
               <!-- <div style="margin-left:80%">
                      <button type="button" class="btn btn-warning" @click.prevent="CallBack()">Nouvelle matière</button> &nbsp;
@@ -11,7 +13,8 @@
             <div class="col-lg-11 mb-4">
               <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">La liste des niveaux</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">La liste des classes de {{LibelleNiveau(ParentId)}} </h6>
+                 
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
@@ -19,9 +22,10 @@
                       <tr >
                         <th>N°</th>
                         <th></th>
-                        <th>Niveau</th>
-                        <!-- <th>Serie</th>
-                        <th>Matière</th> -->
+                        <th>Classe</th>
+                       <!-- <th>Serie</th> -->
+                      
+                        <th></th> 
                         <th></th> 
                         <th></th> 
                         <th></th> 
@@ -30,23 +34,23 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item, index) in GroupeParNiveau" :key="item">
+                      <tr v-for="(item, index) in ListeDeClasseParNiveau" :key="item.id">
                         <td>{{index+1}}</td>
                         <td></td>
-                        <td>{{LibelleNiveau(item)}}</td>
+                        <td>{{item.libelle}}</td>
                         <td></td>
                         <td></td>
-                        <!-- <td v-if="item.serie != 0">{{item.serie}}</td>
-                        <td v-else>{{'Non'}}</td>
-                        <td>{{LibelleMatiere(item.nouvelle_matiere_id)}}</td> -->
+                        <td></td>
+
                         <td >
-                          <a href="#" @click.prevent="voirClasse(item)">
+                          <a href="" @click.prevent="voirMatieres(item.id)">
                           <span style="background-color:green; font-weight:bold; color:#fff; padding:3px; border-radius:3px">
 
-                          Voir les classes
+                          Voir les matières
                           </span>
                           </a>
                           </td>
+                         <!-- <td >{{item.serie}}</td> -->
                        
                         <!-- <td>
                            <button  @click="editModale(item.id)" title="Modifier" type="button"  data-toggle="modal" data-target="#exampleModalCenter">
@@ -407,6 +411,7 @@ export default {
             coefficient:"",
             
           },
+          ParentId:'',
           search:"",
           editText:{
             
@@ -436,6 +441,7 @@ export default {
         }
     },
   created(){
+    this.ParentId= this.$route.params.id
     if(this.gettersNiveau.length == 0){
       this.getNiveau();
     }
@@ -460,6 +466,9 @@ export default {
      },
       EditClasse(){
         return this.gettersClasse.filter(tem =>tem.niveau_id == this.editText.niveau_id)
+     },
+     ListeDeClasseParNiveau(){
+       return this.gettersClasse.filter(tem=>tem.niveau_id == this.$route.params.id)
      },
      Seri(id){
        
@@ -534,9 +543,9 @@ export default {
                 "getTrimestre","AjouterTrimestre","ModifierTrimestre","ModifierTrimestreEncours","SupprimerTrimestre",
                 "getMatiere","AjouterMatiere","ModifierMatiere","SupprimerMatiere","getNouvelleMatiere"]),
 
-        voirClasse(index){
+        voirMatieres(index){
           this.$router.push({
-            name:'ListeDeClasse', params:{id: index}
+            name:'ListeDeMatiere', params:{id: index}
           })
         },
     showModals:function(){
@@ -624,6 +633,9 @@ export default {
       this.$router.push({
         name:'NouvelleMatiere'
       })
+    },
+      Retour(){
+        this.$router.go(-1)
     },
       formaterDate(date) {
       return moment(date, "YYYY-MM-DD").format("DD-MM-YYYY");

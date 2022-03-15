@@ -19,13 +19,13 @@
                    <div class="row ">
             <!-- tableau des professeur -->
             <div class="col-xl-3 col-md-4">
-             <a href="" title="Se connecter en tant que Administrateur ?" @click.prevent="AjouterUser(1)" style="text-decoration: none;">
+             <a href="" title="Se connecter en tant que Administrateur système ?" @click.prevent="AjouterUser(1)" style="text-decoration: none;">
                  <!-- <input type="hidden"  :value="1" > -->
             <div class="card h-100 p-2" style="background-color:#008000;">
                 <div class="card-body ">
                   <div class="row align-items-center">
                     <div class="col mr-3">
-                      <div class="text-xs font-weight-bold text-uppercase text-black ">Administrateur </div>
+                      <div class="text-xs font-weight-bold text-uppercase text-black ">Administrateur Système</div>
                       <div class="h5 mb-0 font-weight-bold"></div>                   
                     </div>
                     <div class="col-auto">
@@ -37,12 +37,12 @@
              </a>
             </div>
             <div class="col-xl-3 col-md-4">
-              <a href="" title="Se connecter en tant que professeur ?" style="text-decoration: none;" @click.prevent="AjouterUser(2)">
+              <a href="" title="Se connecter en tant que Administrateur  ?" style="text-decoration: none;" @click.prevent="AjouterUser(2)">
                   <div class="card h-100">
                 <div class="card-body p-2" style="background-color:#DCDCDC;">
                   <div class="row align-items-center">
                     <div class="col mr-3">
-                      <div class="text-xs font-weight-bold text-uppercase text-black">Professeurs  </div>
+                      <div class="text-xs font-weight-bold text-uppercase text-black">Administrateur  </div> 
                       <div class="h5 mb-2 font-weight-bold "></div>                   
                     </div>
                  
@@ -56,12 +56,12 @@
             </div>
 
             <div class="col-xl-3 col-md-4">
-                <a href="" title="Se connecter en tant que Secrétaire ?" style="text-decoration: none;" @click.prevent="AjouterUser(3)">
+                <a href="" title="Se connecter en tant que professeur ?" style="text-decoration: none;" @click.prevent="AjouterUser(3)">
                 <div class="card h-100 p-2" style="background-color:#41EFEB;">
                     <div class="card-body ">
                     <div class="row align-items-center">
                         <div class="col mr-3">
-                        <div class="text-xs font-weight-bold text-uppercase text-black">Secrétaire</div>
+                        <div class="text-xs font-weight-bold text-uppercase text-black">Professeur</div>
                         <div class="h5 mb-0 font-weight-bold "></div>                   
                         </div>
                         <div class="col-auto">
@@ -74,7 +74,7 @@
                 </a>
             </div>
             <div class="col-xl-3 col-md-4">
-                <a href="" title="Se connecter en tant que Parents ?" style="text-decoration: none;" @click.prevent="AjouterUser(4)">
+                <a href="" title="Se connecter en tant que Parent ?" style="text-decoration: none;" @click.prevent="AjouterUser(4)">
               <div class="card h-100 ">
                 <div class="card-body p-2" style="background-color:#FF0000;">
                   <div class="row align-items-center">

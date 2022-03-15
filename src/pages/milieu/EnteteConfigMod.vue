@@ -9,7 +9,6 @@
             
             <div class="row mr-5">  
              
-               
                 <div class="col-6 col-md-3">
                     
                     <div class="form-group">
@@ -70,8 +69,9 @@
 
                     
                 </div>
+                 
             </div>
-            <div class="row mr-5">  
+            <div class="row">  
              
              
                 <div class="col-6 col-md-3">
@@ -111,8 +111,42 @@
                     <img :src="editEntete.photo" width="150px;" height="120px;" alt="">
                     
                 </div>
+                 
                 
-            </div> <br> 
+            </div>
+            <div class="row">
+                <div class="col-6 col-md-3">
+                    <div class="form-group">                     
+                        <label for="email">Code établissement </label>
+                        <span style="color:red; font-style:italic;"
+                            v-if="$v.editEntete.code.$error && !$v.editEntete.code.required"
+                            role="alert">
+                            <span style="color:red;">*</span> &nbsp;
+                            Ce champs est obligatoire!
+                        </span> 
+                            <input  type="text" class="form-control" id="email" aria-describedby="email"
+                            placeholder="Entrer le code" @input="$v.editEntete.code.$touch()" v-model="editEntete.code">
+                        </div>
+
+                    
+                </div>
+                 <div class="col-6 col-md-3">
+                    <div class="form-group">                     
+                    <label for="email">Statut établissement </label>
+                    <span style="color:red; font-style:italic;"
+                        v-if="$v.editEntete.statut.$error && !$v.editEntete.statut.required"
+                        role="alert">
+                        <span style="color:red;">*</span> &nbsp;
+                        Ce champs est obligatoire!
+                    </span> 
+                        <input  type="text" class="form-control" id="email" aria-describedby="email"
+                        placeholder="Entrer le statut" @input="$v.editEntete.statut.$touch()" v-model="editEntete.statut">
+                    </div>
+
+                    
+                </div>
+            </div>
+             <br> 
 
             <button   @click.prevent="AjouterFonctionLocal" type="submit" class="btn btn-primary ml-5">Modifier</button>
                 &nbsp;
@@ -189,6 +223,8 @@ created(){
             slogan:{required},
             contact:{required},
             adresse:{required},
+            statut:{required},
+            code:{required},
             email:{required},
             // photo:{required},
         }
@@ -248,6 +284,8 @@ created(){
             editEntete.append("contact", this.editEntete.contact);
             editEntete.append("email", this.editEntete.email);
             editEntete.append("slogan", this.editEntete.slogan);
+            editEntete.append("code", this.editEntete.code);
+            editEntete.append("statut", this.editEntete.statut);
             editEntete.append("adresse", this.editEntete.adresse);
             editEntete.append("site", this.editEntete.site);
             editEntete.append('id', this.editEntete.id);

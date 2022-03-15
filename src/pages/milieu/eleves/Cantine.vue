@@ -99,7 +99,7 @@
                       <label for="niveau">{{ $t("ul.niveau") }} </label>                      
                         <select class="form-control" id="niveau" v-model="formData.niveau_id"  
                         :disabled="formData.date_debut != '' && formData.date_fin != ''" >
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden>Choisir le niveau</option>
                           <option v-for="item in gettersNiveau" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -110,7 +110,7 @@
                       <label for="matiere">{{ $t("ul.classe") }} <span style="color:red">*</span> </label>                     
                       <select class="form-control" id="classe" v-model="formData.classe_id"  
                       :disabled="formData.date_debut != '' && formData.date_fin != ''" >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden>Choisir la classe</option>
                           <option v-for="item in AfficherClasse" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>

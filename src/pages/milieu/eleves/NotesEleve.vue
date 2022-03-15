@@ -1,7 +1,7 @@
 <template>
   <div>
       <!-- <Entete/> -->
-          <table  class="table">
+          <!-- <table  class="table">
           <tr>
           
             <td >
@@ -25,7 +25,7 @@
               
             </td>
           </tr>
-        </table>
+        </table> -->
        <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-2 ml-5">
             <div class="row">         
@@ -35,36 +35,37 @@
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden >Selectionner le niveau</option>
                           <option v-for="item in tester" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
                   </div>
-                  <div class="form-group" v-if="this.getterProfileUsers.role_id == 2">
+                  <div class="form-group" v-if="this.getterProfileUsers.role_id == 3">
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden>Selectionner le niveau</option>
                           <option v-for="item in tester" :key="item" :value="item"> {{AfficherNiveau(item)}} </option>
                                               
                       </select>
                   </div>
                 </div>
+               
               <div class="col-6 col-md-3">
                   <div class="form-group"  v-if="this.getterProfileUsers.role_id == 1">
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden>Selectionner la classe</option>
                           <option v-for="item in AfficherClasse" :key="item.id" :value="item.id"> {{(item.libelle)}} </option>
                                               
                       </select>
                   </div>
-                  <div class="form-group"  v-if="this.getterProfileUsers.role_id == 2">
+                  <div class="form-group"  v-if="this.getterProfileUsers.role_id == 3">
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden>Selectionner la classe</option>
                           <option v-for="item in reuissite" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -137,7 +138,8 @@
           <button class="close" @click="fermer">x</button>
           
            <h4>Ajout de note: {{editText.nom}} {{editText.prenom}} -- {{LibClasse(editText.classe_id)}} &nbsp;&nbsp; </h4>
-       
+         
+               
            <div class="card-body">
              <form action="" method="post">
               <div class="form-group">
@@ -149,14 +151,15 @@
               <div class="form-group" v-if="this.getterProfileUsers.role_id == 1">
                   <label for="matiere">Matiere </label>                     
                    <select class="form-control" id="classe" v-model="formData.matiere_id" @input="$v.formData.matiere_id.$touch()">
-                    <option v-for="item in AfficherMatiere" :key="item.id" :value="item.id"> {{item.libelle}} </option>                  
+                   <option value="" selected disabled hidden>Selectionner la matière</option>
+                    <option v-for="item in AfficherMatiere" :key="item.id" :value="item.id"> {{LibelleMatiere(item.nouvelle_matiere_id)}} </option>                  
                                           
                   </select>
               </div>
-              <div class="form-group" v-if="this.getterProfileUsers.role_id == 2">
+              <div class="form-group" v-if="this.getterProfileUsers.role_id == 3">
                   <label for="matiere">Matiere </label>                     
                    <select class="form-control" id="classe" v-model="formData.matiere_id" @input="$v.formData.matiere_id.$touch()">
-                    <option v-for="item in reuissite1" :key="item.id" :value="item.id"> {{item.libelle}} </option>                  
+                    <option v-for="item in reuissite1" :key="item.id" :value="item.id"> {{LibelleMatiere(MatiereId(item.id))}} </option>                  
                                           
                   </select>
               </div>
@@ -232,6 +235,7 @@ export default {
       // console.log(this.GetterStudent);
       this.getNiveau();
       this.getClasse();
+      this.getNouvelleMatiere();
       this.get_all_student();
        this.getTrimestre();
       this.getMatiere();
@@ -251,7 +255,7 @@ export default {
         }
     },
      computed:{
-     ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersTrimestre", "gettersMatiere"]),
+     ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersTrimestre", "gettersMatiere","gettersNouvelleMatiere"]),
      ...mapGetters("student",["GetterStudent"]),
      ...mapGetters('personnel', ['getterProfileUsers', "gettersRole"]),
 
@@ -298,7 +302,7 @@ export default {
        return []
      },
       tester(){
-        if(this.getterProfileUsers.role_id == 2){
+        if(this.getterProfileUsers.role_id == 3){
 
           let objet = this.getterProfileUsers.affectations
           let tableau =[]
@@ -318,7 +322,7 @@ export default {
         return this.gettersNiveau
      },
        reuissite(){
-         if(this.formData.niveau_id != '' && this.getterProfileUsers.role_id == 2){
+         if(this.formData.niveau_id != '' && this.getterProfileUsers.role_id == 3){
 
            let collect =[]
            this.AfficherClasse.filter(item =>{
@@ -333,6 +337,26 @@ export default {
          return collect;
          } return []
          
+     },
+    //       LibelleMatiere(){
+    //    return (id)=>{
+    //      if(id != ""){
+    //        let obj = this.gettersNouvelleMatiere.find(tem=>tem.id == id)
+    //        if(obj){
+    //          return obj.libelle;
+    //        }
+    //      }
+    //    }
+    //  },
+     MatiereId(){
+       return (id)=>{
+         if(id != ""){
+           let obj = this.gettersMatiere.find(tem=>tem.id == id)
+           if(obj){
+             return obj.nouvelle_matiere_id;
+           }
+         }
+       }
      },
        reuissite1(){
          if(this.formData.classe_id != ''){
@@ -395,6 +419,16 @@ export default {
          }
        }
      },
+        LibelleMatiere(){
+       return (id)=>{
+         if(id != ""){
+           let obj = this.gettersNouvelleMatiere.find(tem=>tem.id == id)
+           if(obj){
+             return obj.libelle;
+           }
+         }
+       }
+     },
      ListeEleveParClasse(){
        if(this.formData.niveau_id != "" && this.formData.classe_id != ""){
 
@@ -419,7 +453,7 @@ export default {
 
   methods:{
      ...mapActions("parametres",["getNiveau","AjouterNiveau", "ModifierNiveau","SupprimerNiveau","getClasse",
-                   "getTrimestre","getMatiere"]),
+                   "getTrimestre","getMatiere","getNouvelleMatiere"]),
      ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","AjouterNote", "ModifierNote"]),
      ...mapActions('personnel', ['getUserProfile','changePassword',"getRole"]),
      ModificationEleve(id){

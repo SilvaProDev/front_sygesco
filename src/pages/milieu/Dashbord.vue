@@ -1,8 +1,8 @@
 <template>
   <div>
-     <!-- <entete></entete> -->
+    <Entete/>
     <div class="container-fluid p-5" id="container-wrapper">
-      <h1 style="margin-left:20%;"> {{ $t("SideBar.TableauDeBord") }}</h1>
+      <h1 style="margin-left:30%;"> {{ $t("SideBar.TableauDeBord") }}</h1>
      
       <div class="row ml-3 mb-3" style="margin-left:20%;">
             <!-- Earnings (Monthly) Card Example -->
@@ -88,7 +88,7 @@
                   <div class="row align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Nombres de salles</div>
-                      <div class="h5 mb-0 font-weight-bold ">85</div>                   
+                      <div class="h5 mb-0 font-weight-bold ">25</div>                   
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-school fa-3x text-dark"></i>
@@ -177,13 +177,13 @@
 
 <script>
 
-// import Entete from './Entete.vue'
+ import Entete from './Entete.vue'
 import {mapGetters, mapActions} from "vuex";
 import VueApexCharts from 'vue-apexcharts'
 export default {
   components:{
      apexchart: VueApexCharts,
-    // Entete
+     Entete
   },
   data(){
     return {
@@ -256,13 +256,13 @@ export default {
       return this.GetterStudent.filter(tem=>tem.annee_id == this.AnneEncours && tem.sexe == 'Féminin').length
     },
     NombreProfesseur(){
-      return this.gettersUtilisateur.filter(tem=>tem.annee_id == this.AnneEncours && tem.role_id == 2).length
+      return this.gettersUtilisateur.filter(tem=>tem.annee_id == this.AnneEncours && tem.role_id == 3).length
     },
       NombreTotalProfHomme(){
-      return this.gettersUtilisateur.filter(tem=>tem.annee_id == this.AnneEncours && tem.sexe == 'Masculin' && tem.role_id ==2).length
+      return this.gettersUtilisateur.filter(tem=>tem.annee_id == this.AnneEncours && tem.sexe == 'Masculin' && tem.role_id ==3).length
     },
     NombreTotalProfFemme(){
-      return this.gettersUtilisateur.filter(tem=>tem.annee_id == this.AnneEncours && tem.sexe == 'Féminin' && tem.role_id ==2).length
+      return this.gettersUtilisateur.filter(tem=>tem.annee_id == this.AnneEncours && tem.sexe == 'Féminin' && tem.role_id ==3).length
     },
     NombreParent(){
       return this.gettersUtilisateur.filter(tem=>tem.annee_id == this.AnneEncours).length

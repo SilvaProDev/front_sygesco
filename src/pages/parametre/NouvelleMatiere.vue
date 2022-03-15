@@ -4,6 +4,9 @@
    <Entete/>
    
        <div class="container ml-5">
+         <div style="margin-left:100%">
+                     <button type="button" class="btn btn-info" @click.prevent="Retour()">Retour</button> &nbsp;
+                </div>
           <div class="row">
             <div class="col-lg-11 mb-4">
      
@@ -381,6 +384,9 @@ export default {
             this.$v.formData.$reset();
          this.formData.code="";
          this.formData.libelle="";
+    },
+     Retour(){
+        this.$router.go(-1)
     },
       formaterDate(date) {
       return moment(date, "YYYY-MM-DD").format("DD-MM-YYYY");

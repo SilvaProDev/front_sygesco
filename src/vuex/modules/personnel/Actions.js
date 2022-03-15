@@ -76,7 +76,7 @@ export  function getUserProfile({commit}) {
         text: 'Le mot de passe a été modifié avec Succès!',
         type: "success"
       });
-      router.push({ name: 'LoginUser' })
+      router.push({ name: 'Redirection' })
       }).catch((error) => {console.log(error)
         Vue.notify({
           title: 'Erreur',

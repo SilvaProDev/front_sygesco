@@ -1,6 +1,6 @@
 <template>
   <div>
-       <div class="container-fluid" id="container-wrapper">
+       <div class="container-fluid" id="container-wrapper" v-if="InfoEleve">
               <h3 class="text-center mb-3">Détail des notes de {{NomEleve}} </h3>
           <div class="d-sm-flex align-items-center justify-content-between mb-2 ml-5">
             <div class="row">         
@@ -18,15 +18,17 @@
                       <label for="niveau">Matière </label>
                       
                         <select class="form-control" id="classe" v-model="formData.matiere"  >
-                          <option value="">Choisir la matière</option>
+                          <option value="" selected disabled hidden>Choisir la matière</option>
                           <option v-for="item in AfficherMatiere" :key="item.id" :value="item.id"> {{LibelleMatieres(MatiereIds(item.id))}} </option>
                                               
                       </select>
                   </div>
                 </div>
-              
+
             </div>
-            
+            <button v-if="formData.matiere == '' || formData.date_debut == '' && formData.date_fin ==''" 
+                type="button" class="btn btn-success" @click.prevent="retour()" >Retour
+            </button>
           </div>
           <div class="d-sm-flex align-items-center justify-content-between mb-2 ml-5" v-if="formData.matiere ==''">
             <div class="row">         
@@ -155,7 +157,7 @@ export default {
             classe_id:"",
            
           },
-     detailNote:"",
+     InfoEleve:"",
         }
     },
      created(){
@@ -167,9 +169,9 @@ export default {
         this.getTrimestre();
       this.getMatiere();
       this.get_all_student();
-      this.nota = this.GetterNote.find(tem =>tem.student_id == this.$route.params.id)
+
+      this.InfoEleve = this.GetterStudent.find(tem =>tem.matricule == this.$route.params.id)
      
-        this.detailNote = this.GetterNote.filter(tem =>tem.student_id == this.$route.params.id)
        
     },
 
@@ -178,7 +180,7 @@ export default {
      ...mapGetters("student",["GetterStudent", "GetterNote"]),
 
         AfficherMatiere(){
-        return this.gettersMatiere.filter(tem =>tem.classe_id == this.MatiereId)
+        return this.gettersMatiere.filter(tem =>tem.classe_id == this.InfoEleve.classe_id)
      },
      MatiereId(){
        let objet = this.GetterStudent.find(tem=>tem.id == this.$route.params.id)
@@ -222,27 +224,19 @@ export default {
             return this.test.length+1
         },
      MatricleEleve(){
-         let obj = this.GetterStudent.find(tem =>tem.id == this.$route.params.id)
-         if(obj){
-            return obj.matricule;
-         }
-         return ""
+        return this.InfoEleve.matricule
      },
      NomEleve(){
-         let obj = this.GetterStudent.find(tem =>tem.id == this.$route.params.id)
-         if(obj){
-            return obj.nom+" "+obj.prenom;
-         }
-         return ""
+        return this.InfoEleve.nom+" "+this.InfoEleve.prenom
      },
      test(){
          if(this.formData.matiere != "" && this.formData.matiere !=null){
              return this.GetterNote.filter(
-               tem =>tem.student_id == this.$route.params.id && tem.matiere_id == this.formData.matiere && 
+               tem =>tem.student_id == this.InfoEleve.id && tem.matiere_id == this.formData.matiere && 
                tem.trimestre_id == this.TrimestreEncoursId)
          } else if(this.formData.date_debut != "" && this.formData.date_fin !=""){
             return this.GetterNote.filter(
-               tem =>tem.student_id == this.$route.params.id && tem.date >= this.formData.date_debut  && 
+               tem =>tem.student_id == this.InfoEleve.id && tem.date >= this.formData.date_debut  && 
                tem.date <= this.formData.date_fin && tem.trimestre_id == this.TrimestreEncoursId)
          }
          return ""
@@ -432,6 +426,9 @@ export default {
 
       formaterDate(date) {
       return moment(date, "YYYY-MM-DD").format("DD-MM-YYYY");
+    },
+    retour(){
+      this.$router.go(-1)
     },
     genererEnPdf(){
 

@@ -54,6 +54,7 @@
 									<input type="text" class="form-control" value="John Doe" v-model="user.name">
 								</div>
 							</div>
+                            <!-- {{Verife}} -->
 							<div class="row mb-3">
 								<div class="col-sm-3">
 									<h6 class="mb-0">Email</h6>
@@ -61,6 +62,22 @@
 								<div class="col-sm-9 text-secondary">
 									<input v-model="user.email" type="email" class="form-control" placeholder="email">
 								</div>
+							</div>
+                            <div class="row mb-3" v-if="user.role_id == 4">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Matricule enfant</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+                                     <span style="color:red; font-style:italic;"
+                                            v-if="$v.user.matricule.$error && !$v.user.matricule.required"
+                                            role="alert">Ce champs est obligatoire!
+                                        </span>
+									<input v-model="user.matricule" @input="$v.user.matricule.$touch()"
+                                     type="text" class="form-control" placeholder="matricule">
+								</div>
+                     <div style="color:red;" v-if="!$v.user.matricule.minLength">Minimum {{$v.user.matricule.$params.minLength.min}} Caractères.</div>
+                    <div style="color:red;" v-if="!$v.user.matricule.maxLength">Maximum {{$v.user.matricule.$params.maxLength.max}} Caractères.</div>
+                    
 							</div>
 							<div class="row mb-3">
 								<div class="col-sm-3">
@@ -83,7 +100,7 @@
 									<h6 class="mb-0">Genre</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
-									<input  v-model="user.sexe" type="text" class="form-control" placeholder="genre">
+									<input readonly  v-model="user.sexe" type="text" class="form-control" placeholder="genre">
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -103,24 +120,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div class="row">
-						<div class="col-sm-12">
-							<div class="card">
-								<div class="card-body">
-									<h5 class="d-flex align-items-center mb-3">Project Status</h5>
-									<p>Web Design</p>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<p>Website Markup</p>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-danger" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-					</div> -->
+					
 				</div>
 			</div>
 		</div>
@@ -133,7 +133,7 @@
 <script>
     import {mapGetters, mapActions} from 'vuex'
       import axios from "axios"
-      
+      import {required, minLength, maxLength} from "vuelidate/lib/validators";
           import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
     export default {
@@ -170,6 +170,16 @@ import 'vue-loading-overlay/dist/vue-loading.css';
           console.log( this.user)
         },
 
+ validations:{
+        user:{
+             matricule:{
+                 required,
+                 minLength: minLength(9),
+                 maxLength: maxLength(9),
+             },
+            
+        }
+    },
     computed: {
           ...mapGetters("parametres",["gettersAnne"]),
           ...mapGetters('personnel', ['getterProfileUsers',"gettersUtilisateur", "gettersRole","gettersloadingUser"]),
@@ -178,6 +188,17 @@ import 'vue-loading-overlay/dist/vue-loading.css';
    loadingData(){
     return this.gettersloadingUser
        
+    },
+
+    Verife(){
+        if(this.user.matricule !=""){
+            let objet = this.gettersUtilisateur.find(tem=>tem.matricule == this.user.matricule)
+            if(objet){
+                return false 
+            }
+            return true
+        }
+        return true
     },
 
  LibelleRole(){
@@ -250,12 +271,19 @@ addFichierPDF(file) {
                 reader.readAsDataURL(file);
             },
             modifierPhotoProfil () {
+                if(this.user.role_id == 4){
+
+                     this.$v.user.$touch();
+                    if(this.$v.user.$error){
+                        return
+                    }
                 const formData = new FormData();
                 // formData.append('fichier', this.selectedImage, this.selectedImage.name)
                 formData.append('id', this.user.id)
                 formData.append('name', this.user.name)
                 formData.append('adresse', this.user.adresse)
                 formData.append('sexe', this.user.sexe)
+                formData.append('matricule', this.user.matricule)
                 formData.append('annee_id', this.AnneEncours)
                 formData.append('phone', this.user.phone)
                 formData.append('email', this.user.email)
@@ -264,21 +292,38 @@ addFichierPDF(file) {
 				formData.append('fichier', this.selectedFile, this.selectedFile.name);
 				}
 		
-               let config = {
-                header : {
-                'Content-Type' : 'multipart/form-data'
-                },
-
-            }
+               let config = { header : {'Content-Type' : 'multipart/form-data'},}
 				this.ModifierUtilisateur(formData, config)
-				// this.get_all_student();
 				this.$router.go(-1)
 
+                }else{
+                    const formData = new FormData();
+                    formData.append('id', this.user.id)
+                    formData.append('name', this.user.name)
+                    formData.append('adresse', this.user.adresse)
+                    formData.append('sexe', this.user.sexe)
+                    formData.append('annee_id', this.AnneEncours)
+                    formData.append('phone', this.user.phone)
+                    formData.append('email', this.user.email)
+                    formData.append('role_id', this.user.role_id)
+                    if( this.selectedFile!==""){
+                    formData.append('fichier', this.selectedFile, this.selectedFile.name);
+                    }
+            
+                let config = {
+                    header : { 'Content-Type' : 'multipart/form-data'},
+                }
+
+				this.ModifierUtilisateur(formData, config)
+				this.$router.go(-1)
+                }
+               
             },
 
             retour(){
-                this.$router.go(-1)
+            this.$router.go(-1)
             }
+           
         }
     }
 </script>

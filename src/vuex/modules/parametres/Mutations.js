@@ -1,3 +1,6 @@
+export const SET_LOADING_ENTETE =(state, tableau)=>{
+    state.loadingconfigEntete = tableau
+}
 export const GET_ALL_ANNEE =(state, tableau)=>{
     state.anne = tableau
 }
@@ -35,6 +38,29 @@ export const MODIFIER_ANNEE_ENCOURS = (state, objetModifie) => {
     return elt;
   });
 };
+
+//MUTATION DU BILAN
+export const GET_ALL_BILAN =(state, tableau)=>{
+  state.bilan = tableau
+}
+
+export const AJOUTER_BILAN =(state, nouveau)=>{
+  state.bilan.unshift(nouveau)
+}
+
+export const MODIFIER_BILAN = (state, objetModifie) => {
+  state.bilan = state.bilan.map(elt => {
+    if (elt.id == objetModifie.id) {
+      elt = { ...objetModifie };
+    }
+
+    return elt;
+  });
+};
+
+export const SUPPRIMER_BILAN = (state, id) => {
+  state.bilan = state.bilan.filter(prest => prest.id != id)
+}
 
 //MUTATION DU NIVEAU
 export const GET_ALL_NIVEAU =(state, tableau)=>{

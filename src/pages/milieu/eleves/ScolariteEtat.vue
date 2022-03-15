@@ -1,6 +1,10 @@
 <template>
   <div>
+        <Loader :isVisible="loadingData"/>
+      <Entete/>
        <div class="container-fluid" id="container-wrapper">
+            <h3 class="text-center mb-3" style="text-transform:uppercase; font-weight:bold">Suivi de paiement de la scolarité  </h3>
+            <br>
           <div class="d-sm-flex align-items-center justify-content-between mb-2 ml-5">
             <div class="row">         
 
@@ -9,7 +13,7 @@
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden>Selectionner le niveau</option>
                           <option v-for="item in tester" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -18,7 +22,7 @@
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden>Selectionner le niveau</option>
                           <option v-for="item in tester" :key="item" :value="item"> {{AfficherNiveau(item)}} </option>
                                               
                       </select>
@@ -29,7 +33,7 @@
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden>Selectionner la classe</option>
                           <option v-for="item in AfficherClasse" :key="item.id" :value="item.id"> {{(item.libelle)}} </option>
                                               
                       </select>
@@ -38,7 +42,7 @@
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden>Selectionner la classe</option>
                           <option v-for="item in reuissite" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -47,7 +51,7 @@
               
             </div>
           </div>
-
+      
           <!-- Row -->
           <div class="row" v-if="formData.niveau_id != '' && formData.classe_id != ''">
             <!-- Datatables -->
@@ -64,17 +68,16 @@
                 </div>
                 <div class="table-responsive p-3" id="printMe">
                   
-                  <table class="table align-items-center table-flush bars" id="dataTable">
+                  <table class="table align-items-center table-flush barse" id="dataTable">
                     <thead class="thead-light">
                       <tr>
                         <th>N°</th>
                         <th>Nom</th>
                         <th>Prénoms</th>
                         <th>Sexe</th>
-                        <th>Date Naiss</th>
-                        <th>MATRICULE</th>
-                        <th>ORIENTE</th>
-                        <th>CLASSE</th>
+                        <th>Matricule</th>
+                        <th>Payer</th>
+                        <th>Reste</th>
                         <th colspan="3">ACTION</th>
                       </tr>
                     </thead>
@@ -86,22 +89,22 @@
                         <td>{{item.nom}}</td>
                         <td>{{item.prenom}}</td>
                         <td>{{item.sexe}}</td>
-                        <td>{{item.date_naissance}}</td>
                         <td>{{item.matricule}}</td>
-                        <td>{{item.oriente}}</td>
-                        <td>{{LibelleClasse(item.classe_id)}}</td>
+                        <td > <span style="background-color:green; border-radius:3px; color:#fff;font-weight:bold; padding:2px">
+                            {{ formatageSomme(parseFloat(ScolariteParEleve(item.id)))}}
+                            </span>
+                         </td>
+                        <td>
+                            <span style="background-color:red; border-radius:3px; color:#fff;font-weight:bold; padding:2px">
+                            {{ formatageSomme(parseFloat(ScolariteEleveImpayer(item.id)))}}
+                            </span>
+
+                            </td>
                         <td> 
-                          <!-- <a title="Modifier" href="" @click.prevent="ModificationEleve(item.id)">
-                            <i style="color:green;" class="fas fa-edit"> </i>
-                          </a> 
-                            &nbsp;
-                          <a title="Supprimer" href="" @click.prevent="SupprimerEleve(item.id)">
-                            <i style="color:red;" class="fas fa-trash"></i>
-                          </a>  -->
+                        
                            &nbsp;
                           <a class="btn btn-primary" title="Voir détail" href="" @click.prevent="DetailEleves(item.id)">
                             Détail
-                            <!-- <i class="far fa-clone ">Detail</i> -->
                           </a> 
                         </td>
                       </tr>                                                             
@@ -133,12 +136,15 @@
 import {mapGetters, mapActions} from "vuex";
 // import VueTableDynamic from 'vue-table-dynamic'
 import xlsx from 'xlsx'
+import { formatageSommeSansFCFA,formatageSomme } from "@/Repositorie/Repository";
+import Entete from "../Entete.vue"
+
 
 // const random = () => {
 //   return parseInt(Date.now() + Math.random() * 10000).toString(20).slice(-6)
 // }
 export default {
-  components: {  },
+  components: { Entete },
     data(){
         return{
           selectedFile:"",
@@ -184,20 +190,22 @@ export default {
        this.getRole();
       this.getAnnee();
       this.get_all_student();
+      this.getScolarite();
     
       
     },
-     mounted () {
-    for (let i = 0; i < 100; i++) {
-      this.params.data.push([i+1, `${this.formData.nom}`, `${this.formData.prenom}`, `${this.formData.sexe}`, `${this.formData.date_naissance}`, `${this.formData.matricule}`])
-    }
-  },
+  
 
      computed:{
-     ...mapGetters("parametres",["gettersNiveau", "gettersClasse","gettersAnne"]),
-     ...mapGetters("student",["GetterStudent"]),
+     ...mapGetters("parametres",["gettersNiveau", "gettersClasse","gettersAnne",'gettersloadingconfigEntete']),
+     ...mapGetters("student",["GetterStudent","GetterScolarite"]),
        ...mapGetters('personnel', ['getterProfileUsers', "gettersRole"]),
 
+    
+        loadingData(){
+    return this.gettersloadingconfigEntete
+       
+    },
      AnneEncours(){
        let obj = this.gettersAnne.find(tem=>tem.encours == 1)
        if(obj){
@@ -238,25 +246,51 @@ export default {
              }
          }
      },
-        arrayExerciceDecompteBienService() {
-        let objet = this.GetterStudent.filter(tem=>tem.classe_id);
-        // console.log(objet) 
-        // console.log("objet") 
-        let array_exercie = [];
+       ScolariteEleveImpayer(){
+        return (id)=>{
+            if(id != "" && id != null){
+            return parseInt(this.ScolariteEleve(id)) - parseInt(this.ScolariteParEleve(id))
+               
+            }
+        }
+     },
+       ScolariteEleve(){
+        return (id)=>{
+            if(id != "" && id != null){
+            let lib = this.GetterStudent.find(tem =>tem.id == id)
+                if(lib){
+                    return lib.scolarite
+                }
+                return "" 
+            }
+        }
+     },
+   ScolariteParEleve(){
+       return (id)=>{
+           if(id != ""){
+            let objet = this.GetterScolarite.filter(tem=>tem.student_id == id)
+
+        let array_exercie = []
         if (objet.length > 0) {
           objet.forEach(function (val) {
-            array_exercie.push(val.id);
+            array_exercie.push(val.montant);
           });
-          let unique = [...new Set(array_exercie)];
+          let unique = array_exercie;
           console.log(unique);
          
           if (unique.length == 0) {
             return [];
           }
-          return unique;
+          return unique.map((i) => Number(i)).reduce(function(a, b){
+            return a + b;
+        }, 0);
         }
-        return [];
-    },
+     
+           }
+       return []
+       }
+      
+      },
 
         AfficherNiveau(){
     return (id)=>{
@@ -365,7 +399,8 @@ export default {
   methods:{
      ...mapActions("parametres",["getNiveau","AjouterNiveau", "ModifierNiveau","SupprimerNiveau","getClasse",
      "getAnnee"]),
-     ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","getEleveParClasse","ImporterEleve"]),
+     ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","getEleveParClasse",
+     "ImporterEleve","getScolarite"]),
      ...mapActions('personnel', ['getUserProfile','changePassword',"getRole"]),
      ModificationEleve(id){
         this.$router.push({ name:"editStudent", params:{id:id}})
@@ -447,6 +482,8 @@ export default {
 
         this.$htmlToPaper('printMe', localOptions);
         },
+          formatageSomme:formatageSomme,
+    formatageSommeSansFCFA:formatageSommeSansFCFA,
   
   },
 

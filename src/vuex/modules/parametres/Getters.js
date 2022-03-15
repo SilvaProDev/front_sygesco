@@ -2,7 +2,9 @@
 export const gettersAnne = state =>state.anne;
 export const gettersloadingYear = state =>state.loadingYear;
 export const gettersloadingTransport = state =>state.loadingTransport;
+export const gettersloadingconfigEntete = state =>state.loadingconfigEntete;
 export const gettersNiveau = state =>state.niveau;
+export const gettersBilan = state =>state.bilan;
 export const gettersClasse = state =>state.classe;
 export const gettersTrimestre = state =>state.trimestre;
 export const gettersMatiere = state =>state.matiere;

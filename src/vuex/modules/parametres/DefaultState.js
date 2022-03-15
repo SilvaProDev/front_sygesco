@@ -2,6 +2,7 @@ const defaultState = {
     anne:[],
     niveau:[],
     classe:[],
+    bilan:[],
     trimestre:[],
     matiere:[],
     nouvelle_matiere:[],
@@ -16,6 +17,7 @@ const defaultState = {
     Competencelivret:[],
     loadingYear:false,
     loadingTransport:false,
+    loadingconfigEntete:false,
 }
 
 export default defaultState;

@@ -18,16 +18,16 @@
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden>Choisir le niveau</option>
                           <option v-for="item in tester" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
                   </div>
-                  <div class="form-group" v-if="this.getterProfileUsers.role_id == 2">
+                  <div class="form-group" v-if="this.getterProfileUsers.role_id == 3">
                       <label for="niveau">{{ $t("ul.niveau") }} </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
-                          <option value="" >Choisir le niveau</option>
+                          <option value="" selected disabled hidden>Choisir le niveau</option>
                           <option v-for="item in tester" :key="item" :value="item"> {{AfficherNiveau(item)}} </option>
                                               
                       </select>
@@ -38,16 +38,16 @@
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden>Choisir la classe</option>
                           <option v-for="item in AfficherClasse" :key="item.id" :value="item.id"> {{(item.libelle)}} </option>
                                               
                       </select>
                   </div>
-                  <div class="form-group"  v-if="this.getterProfileUsers.role_id == 2">
+                  <div class="form-group"  v-if="this.getterProfileUsers.role_id == 3">
                       <label for="niveau">{{ $t("ul.classe") }} </label>
                       
                         <select class="form-control" id="classe" v-model="formData.classe_id"  >
-                          <option value="">Choisir la classe</option>
+                          <option value="" selected disabled hidden>Choisir la classe</option>
                           <option v-for="item in reuissite" :key="item.id" :value="item.id"> {{item.libelle}} </option>
                                               
                       </select>
@@ -57,19 +57,18 @@
                  <div class="form-group" v-if="this.getterProfileUsers.role_id == 1">
                  <label for="niveau">{{ $t("ul.matiere") }} </label>               
                    <select class="form-control" id="classe" v-model="formData.matiere_id">
-                    <option v-for="item in AfficherMatiere" :key="item.id" :value="item.id"> {{item.libelle}} </option>                  
+                    <option v-for="item in AfficherMatiere" :key="item.id" :value="item.id"> {{LibelleMatieres(item.nouvelle_matiere_id)}} </option>                  
                                           
                   </select>
               </div>
-              <div class="form-group" v-if="this.getterProfileUsers.role_id == 2">
+              <div class="form-group" v-if="this.getterProfileUsers.role_id == 3">
                  <label for="niveau">{{ $t("ul.matiere") }} </label>                   
                    <select class="form-control" id="classe" v-model="formData.matiere_id">
-                    <option v-for="item in reuissite1" :key="item.id" :value="item.id"> {{item.libelle}} </option>                  
+                    <option v-for="item in reuissite1" :key="item.id" :value="item.id"> {{LibelleMatieres(item.nouvelle_matiere_id)}} </option>                  
                                           
                   </select>
               </div>
-
-                 
+     
                 </div>
               
             </div>
@@ -84,7 +83,7 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Classe: 
                     <span v-if="formData.classe_id" style="color:red; font-weight:bold;"> {{LibClasse(formData.classe_id)}} 
-                      </span> &nbsp;  &nbsp;  Matière : <span v-if="formData.matiere_id" style="color:red; font-weight:bold;">{{LibMatiere(formData.matiere_id)}}</span> </h6>
+                      </span> &nbsp;  &nbsp;  Matière : <span v-if="formData.matiere_id" style="color:red; font-weight:bold;">{{LibelleMatieres(MatiereIds(formData.matiere_id))}}</span> </h6>
                 </div>
                 <div class="table-responsive ">
                   
@@ -115,7 +114,7 @@
                              <td>{{MatriculeEleve(tes)}}</td>                           
                              <td>{{ClasseEleve(ClasseId(tes))}}</td>                           
                              <td>{{(test10(tes)+"/"+Tailletest10(tes))}}</td>                           
-                             <td>{{(test10(tes)/Tailletest10(tes))}}</td>  
+                             <td>{{Moyenne(tes)}}</td>  
                              <!-- <td>{{tem +1+" er(e)"}}</td>                          -->
                                                              
                         </tr>
@@ -171,6 +170,7 @@ export default {
        this.getRole();
       this.getNiveau();
       this.getClasse();
+       this.getNouvelleMatiere();
       this.get_note();
         this.getTrimestre();
       this.getMatiere();
@@ -182,7 +182,7 @@ export default {
     },
 
      computed:{
-     ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersMatiere", "gettersTrimestre"]),
+     ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersMatiere", "gettersTrimestre","gettersNouvelleMatiere"]),
      ...mapGetters("student",["GetterStudent", "GetterNote"]),
        ...mapGetters('personnel', ['getterProfileUsers', "gettersRole"]),
      
@@ -197,6 +197,16 @@ export default {
         }
     }
 },
+   MatiereIds(){
+       return (id)=>{
+         if(id != "" && id != null){
+           let obj =this.gettersMatiere.find(tem =>tem.id == id)
+           if(obj){
+             return obj.nouvelle_matiere_id;
+           }
+          return ""
+         }}
+     },
       tester2(){
        let objet = this.getterProfileUsers.affectations
        let tableau =[]
@@ -230,7 +240,7 @@ export default {
        return []
      },
      tester(){
-        if(this.getterProfileUsers.role_id == 2){
+        if(this.getterProfileUsers.role_id == 3){
 
           let objet = this.getterProfileUsers.affectations
           let tableau =[]
@@ -290,7 +300,16 @@ export default {
         AfficherMatiere(){
         return this.gettersMatiere.filter(tem =>tem.classe_id == this.formData.classe_id)
      },
-    
+      LibelleMatieres(){
+       return (id)=>{
+         if(id != "" && id != null){
+           let obj =this.gettersNouvelleMatiere.find(tem =>tem.id == id)
+           if(obj){
+             return obj.libelle;
+           }
+          return ""
+         }}
+     },
      classe(){
        return (id)=>{
          if(id != null && id != ""){
@@ -304,7 +323,7 @@ export default {
         taille(){
             return this.test.length+1
         },
-        MatiereId(){
+        s(){
           return (id)=>{
             if(id != "" && id != null){
               let obj = this.GetterNote.find(tem=>tem.student_id == id)
@@ -405,6 +424,14 @@ export default {
   //    }
   //  },
   //recupère les notes liés à un étudiant
+  Moyenne(){
+    return (id)=>{
+      if(id != ""){
+     
+        return Math.round(this.test10(id)/this.Tailletest10(id))
+      }
+    }
+  },
      test10(){
        return (id1)=>{
          if(this.formData.matiere_id != "" && this.formData.matiere_id !=null && id1 !="" && id1!=null){
@@ -588,7 +615,7 @@ export default {
 
   methods:{
      ...mapActions("parametres",["getNiveau","AjouterNiveau", "ModifierNiveau","SupprimerNiveau","getClasse",
-                     "getMatiere", "getTrimestre"]),
+                     "getMatiere", "getTrimestre"," getNouvelleMatiere"]),
      ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","get_note"]),
            ...mapActions('personnel', ['getUserProfile','logoutUser', "getRole"]),
 

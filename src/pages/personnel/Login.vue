@@ -22,9 +22,9 @@
                   </div>
                   
                     <h3 class="h4 text-gray-900  font-weight-bold; text-center">Formulaire de connexion 
-                      <span v-if="Nombre==1"> Administrateur</span> 
-                      <span v-if="Nombre==2"> Professeur</span> 
-                      <span v-if="Nombre==3">Secretaire</span> 
+                      <span v-if="Nombre==1"> Super Admin</span> 
+                      <span v-if="Nombre==2"> Administrateur</span> 
+                      <span v-if="Nombre==3">Professeur</span> 
                       <span v-if="Nombre==4">Parent</span> 
                       </h3>
                   <form class="user">
