@@ -19,7 +19,7 @@
 
           </span>
         <span v-else>
-          <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle  bg-primary" width="40">
+          <img :src="url" alt="Admin" class="rounded-circle  bg-primary" width="40">
         </span>
                     Profile 
         </div>
@@ -416,6 +416,7 @@ export default {
 
     data(){
       return{
+         url:"/front/img/avatar1.jpg",
         drawer:false,
         isChange:false,
          menu_active: 1,

@@ -45,7 +45,7 @@
                         <td >
                           <a href="" @click.prevent="voirMatieres(item.id)">
                           <span style="background-color:green; font-weight:bold; color:#fff; padding:3px; border-radius:3px">
-
+                              <i style="color:#000;" class="fas fa-eye"></i>
                           Voir les matières
                           </span>
                           </a>

@@ -2,6 +2,7 @@ const defaultState = {
     utilisateur:[],
     affectation:[],
     permission:[],
+    on_line_user:[],
     role:[],
 
     user: localStorage.getItem('user'),

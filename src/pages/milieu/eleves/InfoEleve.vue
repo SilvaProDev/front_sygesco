@@ -26,7 +26,11 @@
                 </div>
 
             </div>
-            <button v-if="formData.matiere == '' || formData.date_debut == '' && formData.date_fin ==''" 
+            <button v-if="formData.matiere != '' || formData.date_debut != '' || formData.date_fin !=''" 
+                type="button" class="btn btn-dark" @click.prevent="VideChamp()" >Vider les champs
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button v-if="formData.matiere == '' && formData.date_debut == '' && formData.date_fin ==''" 
                 type="button" class="btn btn-success" @click.prevent="retour()" >Retour
             </button>
           </div>
@@ -426,6 +430,11 @@ export default {
 
       formaterDate(date) {
       return moment(date, "YYYY-MM-DD").format("DD-MM-YYYY");
+    },
+    VideChamp(){
+      this.formData.matiere = "",
+      this.formData.date_debut = "",
+      this.formData.date_fin = ""
     },
     retour(){
       this.$router.go(-1)

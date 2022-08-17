@@ -27,7 +27,7 @@
               <a class="nav-link dropdown-toggle"  id="messagesDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                
-               <span style="background-color:red;" class="badge badge-success">{{AnneEncours}}</span>
+               <span style="background-color:red;" class="badge badge-warning">{{AnneEncours}}</span>
               </a>
              
             </li>
@@ -44,7 +44,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <!-- <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px"> -->
-                <span style="background-color:;" class="ml-2 d-none d-lg-inline text-white small">{{ $t("nav.langue") }}</span>
+                <span  class="ml-2 d-none d-lg-inline text-white small">{{ $t("nav.langue") }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#" @click.prevent="setLocale('fr')">
@@ -157,6 +157,7 @@ export default {
 
     data(){
       return{
+         url:"/front/img/avatar1.jpg",
         isModalVisible:false,
         listOne: false,
         isChange:false,
@@ -176,7 +177,7 @@ export default {
     },
       computed:{
       ...mapGetters("parametres",["gettersAnne", "gettersTrimestre",]),
-       ...mapGetters('personnel', ['getterProfileUsers',"gettersRole"]),
+       ...mapGetters('personnel', ['getterProfileUsers',"gettersRole","user"]),
       active(){
         let objet = this.getterProfileUsers.role_id;
         if(objet == 1){
@@ -239,8 +240,13 @@ export default {
         },
 
         SeDeconnecter(){
-          // localStorage.removeItem('token')
-          this.logoutUser()
+           let obj ={
+               id:this.getterProfileUsers.id,
+               email:this.getterProfileUsers.email ,
+              //  user: this.user.access_token
+              }
+              console.log(obj)
+          this.logoutUser(obj)
         },
       //Fonction de modification de la langue
       setLocale(locale){

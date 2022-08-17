@@ -1,6 +1,7 @@
 export const gettersUtilisateur = state =>state.utilisateur;
 export const gettersAffectation = state =>state.affectation;
 export const gettersPermission = state =>state.permission;
+export const gettersUserOnLine = state =>state.on_line_user;
 export const gettersRole = state =>state.role;
 
 export const isLoggedIn = state => state.isLoggedIn;

@@ -22,7 +22,7 @@
                           <span style="color:red; font-weight:bold">*</span>
                           Ce champs est obligatoire!
                       </span> 
-                    <input v-model="formData.titre" type="text" class="form-control" id="titre">
+                    <input v-model="formData.titre" type="text" class="form-control" id="titre" spellcheck="true">
                     </div>
                    
                   
@@ -48,7 +48,7 @@
                           <span style="color:red; font-weight:bold">*</span>
                           Ce champs est obligatoire!
                       </span>
-                      <textarea v-model="formData.texte" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      <textarea spellcheck="true" v-model="formData.texte" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
               
 

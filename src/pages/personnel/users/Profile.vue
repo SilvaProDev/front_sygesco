@@ -17,17 +17,17 @@
             </ol>
           </nav>
           <!-- /Breadcrumb -->
-    
+     
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
                    <span v-if="getterProfileUsers.image !='vide' && getterProfileUsers.image !=null">
-									<img :src="getterProfileUsers.image" alt="Admin" class="rounded-circle p-1 bg-primary" width="130">
+									<img :src="getterProfileUsers.image" alt="Admin" class="rounded-circle p-1 bg-primary" width="100">
 								</span>
 								<span v-else>
-								<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+								<img :src="url" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
 
 								</span>
                     <div class="mt-3">
@@ -44,6 +44,8 @@
              
             </div>
             <div class="col-md-8">
+                          
+
               <div class="card mb-3" v-if="getterProfileUsers.role_id == 4 && getterProfileUsers.matricule == null">
                
              
@@ -96,6 +98,28 @@
                     </div>
                   </div>
               </div>
+               <div class="card mb-3" v-else-if="getterProfileUsers.role_id == 1">
+               
+             
+                <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-2 ml-5">
+                        <i class="material-icons text-info mr-2"></i>Cliquer sur le bouton pour voir les utilisateurs connectés 
+                       
+                      </h6>
+                      <div class="progress mb-4 ml-5" style="height: 8px">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                     
+                      <div class="col-sm-12 ml-5">
+                        <a  class="btn btn-info " href="" @click.prevent="OnlineUser" >Utilisateurs en ligne</a>
+                      </div>
+                         
+                      
+            
+                    </div>
+                  </div>
+              </div>
                <div class="card mb-3" v-else>
                
              
@@ -137,7 +161,7 @@
                       </tr>                                                         
                     </tbody>
                   </table>
-                  <table class="table align-items-center table-flush" v-else>
+                  <!-- <table class="table align-items-center table-flush" v-else>
                     <thead class="thead-light">
                       <tr >
                         <th>N°</th>
@@ -154,7 +178,7 @@
                         </td>
                                                                           
                     </tbody>
-                  </table>
+                  </table> -->
                 </div>
                     
             
@@ -230,8 +254,6 @@
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3">
                         <i class="material-icons text-info " style="margin-left:10%"></i>Modification de mot passe</h6>
-                      <!-- {{getterProfileUsers}} -->
-                      <!-- <small>Parents children</small> -->
                       <div class="progress mb-3 " style="margin-left:10%; height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
@@ -339,6 +361,7 @@
         data() {
             
           return {   
+            url:"/front/img/avatar1.jpg",
             formData:{
               ancien:"",
               nouveau_mot_de_passe:"",
@@ -372,7 +395,8 @@
                 passwordconfirm:{
                     sameAsPassword: sameAs('nouveau_mot_de_passe'),
                 }
-       }
+       },
+       objLinea:''
        
 },
         created(){
@@ -389,6 +413,7 @@
         this.getNouvelleMatiere();
       this.get_all_student();
       this.getUtilisateur()
+      this.getUserOnLine()
           
         },
 
@@ -397,7 +422,8 @@
      "gettersTransport","gettersNouvelleMatiere"]),
            ...mapGetters("student",["GetterStudent", "GetterNote"]),
 
-          ...mapGetters('personnel', ['getterProfileUsers', "gettersRole", "gettersAffectation", "gettersloadingUser","gettersUtilisateur"]),
+          ...mapGetters('personnel', ['getterProfileUsers', "gettersRole", "gettersAffectation", "gettersloadingUser",
+          "gettersUtilisateur","gettersUserOnLine",'user']),
 
    loadingData(){
     return this.gettersloadingUser
@@ -517,7 +543,7 @@
          "getClasse", "getMatiere", "getAnnee", "AjouterMessageEmail", "AjouterMessageSms", "AjouterTransport",
          "getTransport","getNouvelleMatiere"]),
         ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","get_note"]),
-              ...mapActions('personnel', ['getUserProfile','changePassword',"getRole", "getAffectation","getUtilisateur"]),
+              ...mapActions('personnel', ['getUserProfile','changePassword',"getRole", "getAffectation","getUtilisateur","getUserOnLine"]),
 
                  toggle(){
                     this.open = !this.open
@@ -583,6 +609,12 @@ addFichierPDF(file) {
             },
            
 
+          OnlineUser(){
+             this.$router.push({
+                name:'UserOnline', 
+
+              })
+            },
             InfoEleve(index){
              this.$router.push({
                 name:'InfoEleve', params:{id: index}

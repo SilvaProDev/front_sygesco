@@ -94,7 +94,7 @@
                       Ce champs est obligatoire!
                   </span>  
                   <input @input="$v.formData.libelle.$touch()" v-model="formData.libelle"   type="text"  class="form-control" id="libelle" aria-describedby="emailHelp"
-                  placeholder="nom de la permission">
+                  placeholder="nom de la matière">
               </div>
               
                
@@ -145,7 +145,7 @@
                       Ce champs est obligatoire!
                   </span>  
                   <input @input="$v.editText.libelle.$touch()" v-model="editText.libelle"   type="text"  class="form-control" id="libelle" aria-describedby="emailHelp"
-                  placeholder="Nom de la permission">
+                  placeholder="Nom de la matière">
               </div>
 
               

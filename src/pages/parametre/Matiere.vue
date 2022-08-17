@@ -41,8 +41,8 @@
                         <td>{{LibelleMatiere(item.nouvelle_matiere_id)}}</td> -->
                         <td >
                           <a href="#" @click.prevent="voirClasse(item)">
-                          <span style="background-color:green; font-weight:bold; color:#fff; padding:3px; border-radius:3px">
-
+                          <span style="background-color:green; font-weight:bold; color:#fff; padding:3px; border-radius:3px; text-underline:none;">
+                          <i style="color:#000;" class="fas fa-eye"></i>
                           Voir les classes
                           </span>
                           </a>

@@ -6,7 +6,7 @@
           <div class="col">
 
           
-        <h2>Detail de l'eleve</h2>
+        <h2>Détail de l'élève</h2>
       <hr>
         <button type="button" class="btn btn-primary" @click.prevent="genererEnPdf()"
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1">Imprimer</button>
@@ -62,7 +62,7 @@
              
               </div>         
               <div class="col-md-6">
-                <span v-if="editText.photo != 'vide'">
+                <span v-if="editText.photo != 'vide' && editText.photo != null">
                     <img :src="editText.photo" alt="" width="110px;" height="100px;">
                   
                 </span> 
@@ -567,7 +567,7 @@ export default {
            showIsModalSMS: false,
            showIsModalScolarite: false,
            showIsModalTransport: false,
-          url:"https://cdn.pixabay.com/photo/2017/06/09/23/22/people-2388584_960_720.png",
+          url:"/front/img/url1.jpg",
             selectedFile: "",
             editText:{
                 nom:"",

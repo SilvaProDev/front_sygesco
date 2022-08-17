@@ -2,7 +2,10 @@
   <div>
        <Loader :isVisible="loadingData"/>
        <div class="container-fluid" id="container-wrapper">
-              <h3 class="text-center mb-3">Statistique de l'année {{formData.anne}} du niveau {{formData.niveau}}  </h3>
+              <h3 class="text-center mb-3" v-if="formData.anne != '' && formData.niveau != '' && formData.libelle_id != '' ">
+                Statistique de l'année {{formData.anne}} du niveau {{formData.niveau}} 
+               </h3>
+               <br>
           <div class="d-sm-flex align-items-center justify-content-between mb-2 ml-5">
             <div class="row">     
                 
@@ -16,6 +19,7 @@
                           <option value="2018" >2018</option>
                           <option value="2020" >2020</option>
                           <option value="2021" >2021</option>
+                          <option value="2022" >2022</option>
                                         
                       </select>
                   </div>
@@ -48,7 +52,7 @@
                   </div>
                  
                 </div>
-                 <div class="col-4 col-md-3">
+                 <div class="col-4 col-md-3" v-if="formData.anne != '' || formData.niveau != '' || formData.libelle_id != '' ">
                 <button @click.prevent="VideChamp" type="submit" class="form-control btn btn-info">vider les champs</button>
                  
                 </div>
@@ -95,10 +99,10 @@
                         <th colspan="9">
                             <span style="margin-left:18%; background-color:#C6222C;border-radius:10px;text-transform:uppercase;
                             color:#fff;">
-                                Enseignement secondaire privé premier/deuxième cycle
+                                Enseignement secondaire privé premier/seconde cycle
                             </span> 
                             <br><br><br>
-                            <span v-if="AfficherLeDetail" style="margin-left:22%; background-color:#0AAF7D;border-radius:10px;text-transform:uppercase;
+                            <span v-if="AfficherLeDetail" style="margin-left:23%; background-color:#0AAF7D;border-radius:10px;text-transform:uppercase;
                             color:#fff;">
                                 {{AfficherLeDetail.titre}}
                             </span>

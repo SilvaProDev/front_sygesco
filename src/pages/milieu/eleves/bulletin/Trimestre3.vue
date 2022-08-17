@@ -17,7 +17,7 @@
                <!-- {{testMoiAussi(8, 10)}} 
                 {{SomParMatiere(3)}}
                {{MatiereParStudent(1)}}  -->
-               <!-- {{M01atiereParStudent(3)}}  -->
+               {{M01atiereParStudent(3)}} 
                <!-- {{reuissite}}  -->
                 
            <p v-if="formData.trimestre_id == ''" class=" ml-5 text-gray-800 font-weight-bold"> Selectionnez  le trimestre pour voir le bulletin</p>

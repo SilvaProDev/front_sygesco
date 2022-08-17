@@ -42,27 +42,41 @@ export  function getUserProfile({commit}) {
       resolve(response.data)
       commit("PROILE_USER",response.data)
       commit("SET_LOADING_USER",false)
-      //     Vue.notify({
-      //       title: 'Success',
-      //   text: 'Connexion effectuée  avec Succès!',
-      //   type: "success"
-      // });
+      
+      }).catch(error =>{
+       reject(error)
+      });
+  })  
+  }
+export  function getUserOnLine({commit}) {
+  return new Promise((resolve,reject)=>{
+    Api.get('/auth/user-online',{ headers: authHeader() }).then(response => {
+      
+      resolve(response.data)
+      commit("GET_USER_ONLINE",response.data)
+      
       }).catch(error =>{
        reject(error)
       });
   })  
   }
 
-  export function logoutUser({commit}){
-    localStorage.removeItem('token')
+  export const logoutUser =({commit, dispatch},user )=>{
     //  localStorage.removeItem('Users')
-    commit("PROILE_USER")
-    Api.post('/auth/user-logout').then(resp =>{
-      commit('LOGOUT_USER', resp.localStorage.removeItem('token'))
+  //  localStorage.removeItem('token')
+    asyncLoading(Api.post('/auth/logout', {
+      id: user.id,
+    },{ headers: authHeader() })).then(resp =>{
+        
+      commit("PROILE_USER", resp.data)
+      dispatch("getUserProfile")
+      dispatch("getUserOnLine")
+       localStorage.removeItem('token')
     
   }).catch(error =>console.log(error));
-   
-    router.push({ name: 'Redirection' })
+   localStorage.removeItem('token')
+  router.push({ name: 'Redirection' })
+      // location.reload();
     
   }
 
@@ -70,7 +84,7 @@ export  function getUserProfile({commit}) {
     asyncLoading(Api.post('/auth/change-password',objet, { headers: authHeader() })).then(response =>{
       commit("PROILE_USER",response.data)
       dispatch("getUserProfile")
-     
+      localStorage.removeItem('token')
           Vue.notify({
             title: 'Success',
         text: 'Le mot de passe a été modifié avec Succès!',
@@ -87,6 +101,12 @@ export  function getUserProfile({commit}) {
     })
       // router.push({ name: 'LoginUser' })
   }
+//ACTION DE L UTILISATEUR
+// export const getUserOnLine = ({commit})=>{
+//     Api.get('/auth/user-online').then(resp =>{
+//         commit("GET_USER_ONLINE", resp.data)
+//     }).catch(error =>console.log(error));
+// }
 //ACTION DE L UTILISATEUR
 export const getUtilisateur = ({commit})=>{
     Api.get('/user').then(resp =>{

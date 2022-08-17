@@ -2,7 +2,7 @@
   <div>
      <Loader :isVisible="loadingData"/>
        <div class="container-fluid" id="container-wrapper">
-              <h3 class="ml-5 mb-3">Attribution de classes et matières à l'enseignant </h3>
+              <h3 class="ml-5 mb-3" style="text-align:center">Affectation des classes et matières à l'enseignant </h3>
    <button class=" btn btn-warning" style="margin-left:95%" @click.prevent="retourSurGestionUser" type="submit" >Retour</button>
               <h6 class="ml-5"> <span style="color:red;">Enseignant</span>: {{detail.name}} &nbsp; <span style="color:red;">Email</span>: {{detail.email}} </h6>
         <div class="d-sm-flex align-items-center justify-content-between mb-2 ml-5">

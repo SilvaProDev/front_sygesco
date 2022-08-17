@@ -32,6 +32,9 @@ export const SET_LOADING_USER =(state, tableau)=>{
 //   state.token = message
 // }
 
+export const GET_USER_ONLINE =(state, tableau)=>{
+    state.on_line_user = tableau
+}
 export const GET_ALL_UTILISATEUR =(state, tableau)=>{
     state.utilisateur = tableau
 }

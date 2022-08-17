@@ -25,7 +25,7 @@
 						<div class="card-body">
 							<div class="d-flex flex-column align-items-center text-center" v-if="user">
 								<span v-if="user.image =='vide' || user.image ==null">
-								<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+								<img :src="url" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
 								</span>
 								<span v-else>
 									<img :src="user.image" alt="Admin" class="rounded-circle p-1 bg-primary" width="130">
@@ -148,6 +148,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
     // })
 
     return {
+         url:"/front/img/avatar1.jpg",
         wholename: '',
         email: '',
 		user:'',

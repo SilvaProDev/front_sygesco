@@ -567,7 +567,7 @@ export default {
            showIsModalSMS: false,
            showIsModalScolarite: false,
            showIsModalTransport: false,
-          url:"https://cdn.pixabay.com/photo/2017/06/09/23/22/people-2388584_960_720.png",
+          url:"/front/img/url1.jpg",
             selectedFile: "",
             editText:{
                 nom:"",

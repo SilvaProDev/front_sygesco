@@ -6,7 +6,7 @@
         <div class="bloc-modale" style="width:100%"  :style="{ backgroundImage: 'url(' + images+ ')', width: '900%', height: '1000px' }">
 
         <div class="overlay" > 
-        <div class="card shadow-lg" style="width:100%; margin-left:auto">
+        <div class="card shadow-lg" style="width:100%; margin-left:40%">
           <div class="card-body p-0" >
             <div class="row">
            
@@ -188,7 +188,7 @@ created(){
     position: fixed;
     top: 100px;
     bottom: 0;
-    left: 500px;
+    left: 20%;
     right: 400;   
 }
 
@@ -200,7 +200,7 @@ created(){
         top: 10%;
         width:35%;
         /* margin-right: 45%; */
-        left: 60%;
+        left: 55%;
 }
 
  .close{

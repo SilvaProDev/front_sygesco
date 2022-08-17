@@ -49,6 +49,7 @@ import TransportStatistique from "../pages/parametre/TransportStatistique.vue"
  import Login from "../pages/personnel/Login.vue"
  import Permission from "../pages/personnel/Permission.vue"
  import Profile from "../pages/personnel/users/Profile.vue"
+ import UserOnline from "../pages/personnel/users/UserOnline.vue"
  import UpdateProfile from "../pages/personnel/users/UpdateProfile.vue"
  import Affectation from "../pages/personnel/Affectation.vue"
  import AffectationModification from "../pages/personnel/AffectationModification.vue"
@@ -224,6 +225,11 @@ const routes = [
                 path:"profile-user",
                 name:"Profile",
                 component:Profile
+            },
+            {
+                path:"user-online",
+                name:"UserOnline",
+                component:UserOnline
             },
             {
                 path:"permission",
