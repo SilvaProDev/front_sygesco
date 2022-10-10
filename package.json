@@ -2,7 +2,6 @@
   "name": "sygesco",
   "version": "0.1.0",
   "private": true,
-  
   "engines": {
     "node": "14.17.4"
   },
@@ -13,6 +12,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "accounting": "latest",
     "apexcharts": "^3.32.0",
     "axios": "^0.24.0",
