@@ -1,16 +1,12 @@
 <template>
   <div >
-    <!-- <header id="navigation" class="sidebar-blue" style="background-color:#6A4DFB">
-        <button id="sidebarToggleTop" class="btn btn-link rounded-circle"
-           v-bind:class="{active: isChange }"  @click="openMenu2()">
-            <i class="fa fa-bars" style="color:#fff;"></i> 
-          </button>
-    </header> -->
+
        <!-- Sidebar -->
 
       
     <ul class="navbar-nav sidebar sidebar-light accordion bg-info" id="accordionSidebar" >
-      <li class="sidebar-brand d-flex align-items-center " href="index.html">
+      
+      <li class="sidebar-brand d-flex align-items-center ">
         
          <a v-if="getterProfileUsers.length !=0" :title="getterProfileUsers.name"  href="#" @click.prevent="ProfilUser" style="text-decoration: none;color:#fff">
         <div class="sidebar-brand-icon">

@@ -109,6 +109,12 @@ export function SupprimerEleve({ commit }, id) {
    
    }
 
+   export const getMoyenne = ({commit})=>{
+   
+     Api.get('/moyenne').then(resp =>{
+         commit("GET_MOYENNE", resp.data)
+     }).catch(error =>console.log(error));
+ }
     //ACTION DE LA NOTE
 
     export const get_note = ({commit})=>{

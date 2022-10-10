@@ -42,26 +42,24 @@
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1">Payer le transport</button> 
         <hr>
         
-        <h5>INFORMATION GENERALE DE L'ELEVE</h5>
-        <div id="printMe" ref="table" style="!important" class="col">
-            <div class="row" id="printMe">
-              <div class="col-md-6">
-                <div class="col-6 col-md-6">
-                 <div>
-                   <span> <span style="color:#000; font-weight:bold"> Nom:</span> {{editText.nom}} </span> <br>
-                   <span> <span style="color:#000; font-weight:bold"> Prénom:</span> {{editText.prenom}} </span> <br>
-                   <span> <span style="color:#000; font-weight:bold"> Sexe:</span> {{editText.sexe}} </span> <br>
-                   <span> <span style="color:#000; font-weight:bold"> Date de naissance:</span> {{formaterDate3(editText.date_naissance)}} </span> <br>
-                   <span> <span style="color:#000; font-weight:bold"> N°Matricule:</span> {{editText.matricule}} </span> <br>
-                   <span> <span style="color:#000; font-weight:bold"> Classe:</span> {{LibelleClasse(editText.classe_id)}} </span> <br>
-                   <span> <span style="color:#000; font-weight:bold"> Orienté:</span> {{editText.oriente}} </span> <br>
-                   <span> <span style="color:#000; font-weight:bold"> Nationalité:</span> {{editText.nationalite}} </span> <br>
-                  
-                 </div>
-              </div>
+        <div  ref="table" style="!important" class="col" id="printMes">
+        <h5 style="margin-left:325px;">INFORMATION GENERALE DE L'ELEVE</h5>
+            <div class="row">
+              <div class="col-md-8">
+                <span> <span style="color:#000; font-weight:bold"> Nom:</span> {{editText.nom}} </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Prénom:</span> {{editText.prenom}} </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Sexe:</span> {{editText.sexe}} </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Date de naissance:</span> {{formaterDate3(editText.date_naissance)}} </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> N°Matricule:</span> {{editText.matricule}} </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Classe:</span> {{LibelleClasse(editText.classe_id)}} </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Orienté:</span> {{editText.oriente}} </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Nationalité:</span> {{editText.nationalite}} </span> <br>
+                <!-- <div class="col-6 col-md-6">
+                 
+              </div> -->
              
               </div>         
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <span v-if="editText.photo != 'vide' && editText.photo != null">
                     <img :src="editText.photo" alt="" width="110px;" height="100px;">
                   
@@ -80,8 +78,8 @@
               
             </div>
             <hr>
-            <div class="row" id="printMe">
-              <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-8">
                 <div class="col-6 col-md-6">
                  <div>
                    <span> <span style="color:#000; font-weight:bold"> Père:</span> {{editText.nom_pere}} </span> <br>
@@ -96,7 +94,7 @@
               </div>
              
               </div>         
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <span style="color:#000; font-weight:bold">Paiement de la scolarité </span> <br> 
                 
                <span> <span style="color:#000; font-weight:bold"> Scolarité:   </span> 
@@ -116,7 +114,7 @@
                 </span> <br> <br>
               
 
-                <h5> {{NbreAbsence}} Absence<span v-if="NbreAbsence > 1">s</span> </h5>
+                <h5 v-if="NbreAbsence > 0"> {{NbreAbsence}} Absence<span >(s)</span> </h5>
                 <span v-for="item in FiltreParAbsence" :key="item.id" :value="item.id">
                 <span style="color:#000; font-weight:bold"> {{formaterDate2(item.date)}} =></span>{{LibelleMatiere(MatiereId(item.matiere_id))}} <br>
                  
@@ -126,8 +124,8 @@
               
             </div>
             <hr>
-            <div class="row" id="printMe">
-              <div class="col-md-6">
+            <div class="row" >
+              <div class="col-md-8" v-if="CantineParEleve.length >0">
                 <div class="col-6 col-md-8">
                  <div>
                   <h5>Cantine journalière</h5>
@@ -147,7 +145,7 @@
               </div>
              
               </div>         
-              <div class="col-md-6">
+              <div class="col-md-4" v-if="FiltreTransportParEleve.length >0">
                 <h5>Transport</h5>
                 
                <span v-for="item in FiltreTransportParEleve" :key="item.id" :value="item.id"> 
@@ -159,8 +157,191 @@
               </div>         
               
             </div>
-            <p v-if="showMe">Imprimer le <span> date </span> par <span> User</span> </p>
+            <p >Imprimer le <span> {{formaterDate3(new Date())}} </span> par <span> {{getterProfileUsers.name}}</span> </p>
         </div>
+
+       <div v-show="seen" id="hide">
+          <div class="table-responsive p-3"  id="printMe"  style="!important">
+                  
+          <table class="table align-items-center table-flush" id="dataTable"  style="border: 1px solid #000 !important" >
+            
+              <tr >
+                  
+                <th colspan="4" style="border: 1px solid #000 !important">
+                    <span>
+                      <span style="margin-bottom:10px;">
+                        MINISTERE DE L EDUCATION NATIONALE ET  
+                        DE L'ALPHABETISATION 
+
+                      </span>
+                        <br>
+                        <div class="bars"></div>  &nbsp;&nbsp; 
+                      DREN : KORHOGO
+                    </span>
+                    
+                </th>
+                <!-- <th colspan="3">
+                    <span>
+                        BELLETIN TRIMESTIEL DES NOTES <br> &nbsp;&nbsp; &nbsp;&nbsp;
+                        <span>1er Trimestre</span>
+                    </span>
+                </th> -->
+                <th colspan="2" style="border: 1px solid #000 !important">
+                    <span>
+                        Année Scolaire <br> &nbsp;&nbsp; &nbsp;
+                        {{AnneEncoursLibelle}}
+                    </span>
+                </th> 
+            </tr>
+            <tr v-for="item in gettersconfigEntete" :key="item.id">
+                <td colspan="2" style="border: 1px solid #000 !important">
+                    
+                <img src="/front/img/Armoiries.png" width="70px;" style="margin-left:15px;" />       
+        &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>Etablissement :</span><span >{{item.nom}}</span> <br>
+                        
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>Situation :</span><span >{{item.adresse}}</span>
+                    
+                    
+                      
+                </td>
+                <td style="border: 1px solid #000 !important">
+                  <span>Logo:</span> <span >
+                            <img :src="item.photo" alt="" style="width:45px;">
+                            </span> <br> <br>
+                            <span>Téléthone:</span><span >{{item.contact}}</span>
+                </td>
+                <td colspan="2"  style="border: 1px solid #000 !important">
+                    <span>Code</span>: <span>{{item.code}}</span> <br> <br>
+                    <span>Statut</span>: <span>{{item.statut}}</span>
+                </td>
+            </tr>
+          </table>
+          <div id="printMe" ref="table" style="!important" >
+          <h5 style="margin-left:320px;">INFORMATION GENERALE DE L'ELEVE</h5>
+              <div class="row">
+                <div class="col-6">
+                <!-- <div> -->
+                  <span> <span style="color:#000; font-weight:bold"> Nom:</span> {{editText.nom}} </span> <br>
+                  <span> <span style="color:#000; font-weight:bold"> Prénom:</span> {{editText.prenom}} </span> <br>
+                  <span> <span style="color:#000; font-weight:bold"> Sexe:</span> {{editText.sexe}} </span> <br>
+                  <span> <span style="color:#000; font-weight:bold"> Date de naissance:</span> {{formaterDate3(editText.date_naissance)}} </span> <br>
+                  <span> <span style="color:#000; font-weight:bold"> N°Matricule:</span> {{editText.matricule}} </span> <br>
+                  <span> <span style="color:#000; font-weight:bold"> Classe:</span> {{LibelleClasse(editText.classe_id)}} </span> <br>
+                  <span> <span style="color:#000; font-weight:bold"> Orienté:</span> {{editText.oriente}} </span> <br>
+                  <span> <span style="color:#000; font-weight:bold"> Nationalité:</span> {{editText.nationalite}} </span> <br>
+                  
+                <!-- </div> -->
+              </div>
+                <!-- <div class="col-md-8">
+              
+                </div>          -->
+                <div class="col-6">
+                  <span v-if="editText.photo != 'vide' && editText.photo != null">
+                      <img :src="editText.photo" alt="" width="110px;" height="100px;">
+                    
+                  </span> 
+                  <span v-else>
+                      <img :src="url" alt="" width="120px;" height="120px;">
+                    
+                  </span> 
+                    
+                    <br> <br>
+                  
+                <span> <span style="color:#000; font-weight:bold"> Adresse:</span> {{editText.adresse}} </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Maladie particulière:</span> {{editText.maladie}} </span> <br>
+                
+                </div>         
+                
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="col-6 col-md-6">
+                  <div>
+                    <span> <span style="color:#000; font-weight:bold"> Père:</span> {{editText.nom_pere}} </span> <br>
+                  
+                    <span> <span style="color:#000; font-weight:bold"> Mère:</span> {{editText.nom_mere}}  </span> <br>
+                    
+                    <span> <span style="color:#000; font-weight:bold"> Tuteur (trice):</span> {{editText.nom_tuteur}} </span> <br>
+                    <span> <span style="color:#000; font-weight:bold"> Contact du tuteur:</span> {{editText.contact_tuteur}} </span> <br>
+                    <span> <span style="color:#000; font-weight:bold"> Email:</span> {{editText.email}} </span> <br>
+                    
+                  </div>
+                </div>
+              
+                </div>         
+                <div class="col-md-4">
+                  <span style="color:#000; font-weight:bold">Paiement de la scolarité </span> <br> 
+                  
+                <span> <span style="color:#000; font-weight:bold"> Scolarité:   </span> 
+                        <span style="color:red; font-weight:bold;"> 
+                          {{formatageSomme(parseFloat(editText.scolarite)) }}</span> 
+                </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Scolarité payée:</span> 
+                    <span style="color:#07EBFC; font-weight:bold;">
+                    {{formatageSomme(parseFloat(sommeTotalScolariteParEleve))}}
+                    </span>
+                </span> <br>
+                <span> <span style="color:#000; font-weight:bold"> Reste à payer:</span>
+                <span style="color:#FC7207; font-weight:bold">
+                  {{ formatageSomme(parseFloat(ResteTotalApayerParEleve))}} 
+
+                </span>
+                  </span> <br> <br>
+                
+
+                  <h5 v-if="NbreAbsence > 1"> {{NbreAbsence}} Absence<span >(s)</span> </h5>
+                  <span v-for="item in FiltreParAbsence" :key="item.id" :value="item.id">
+                  <span style="color:#000; font-weight:bold"> {{formaterDate2(item.date)}} =></span>{{LibelleMatiere(MatiereId(item.matiere_id))}} <br>
+                  
+
+                  </span>
+                </div>         
+                
+              </div>
+              <hr>
+              <div class="row" >
+                <div class="col-md-8" v-if="CantineParEleve.length >0">
+                  <div class="col-6 col-md-8">
+                  <div>
+                    <h5>Cantine journalière</h5>
+                      <span v-for="item in CantineParEleve" :key="item.id" :value="item.id">
+
+                  <span style="color:#000; font-weight:bold"> {{formaterDate1(item.date)}} =></span> {{item.montant}} 
+                      <a title="Supprimer" href="" @click.prevent="SupprimerCantine(item.id)" >x</a> &nbsp; 
+                      </span>
+                      <span> 
+                    </span> <br>
+                    
+                    
+                    
+                  
+                    
+                  </div>
+                </div>
+              
+                </div>         
+                <div class="col-md-4" v-if="FiltreTransportParEleve.length >0">
+                  <h5>Transport</h5>
+                  
+                <span v-for="item in FiltreTransportParEleve" :key="item.id" :value="item.id"> 
+                  <span style="color:#000; font-weight:bold"> {{LibelleTrimestre(item.trimestre_id)}} =></span> {{item.montant}} FCFA &nbsp;
+                  <span style="background-color:aqua">Payer</span> <br>
+                  <!-- <a title="modifier" href="">x</a>  -->
+                </span> <br>
+                
+                </div>         
+                
+              </div>
+              <p >Imprimer le <span> {{formaterDate3(new Date())}} </span> par <span> {{getterProfileUsers.name}}</span> </p>
+          </div>
+        </div>
+       </div>
+                
+
         </div>
         </div>
     </div>
@@ -630,6 +811,7 @@ export default {
     },
 
     created(){
+      this.showMe =false,
         this.editText = this.GetterStudent.find(tem =>tem.id == this.$route.params.id)
         console.log( this.editText)
     if(this.gettersClasse.length == 0){
@@ -640,6 +822,7 @@ export default {
      this.getAbsence();
       this.getNiveau();
       this.getTrimestre();
+      this.getconfigEntete();
       this.get_all_student();
       this.get_Liste_Cantine();
        this.getScolarite();
@@ -705,7 +888,7 @@ export default {
     },
      computed:{
      ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersMatiere","gettersTrimestre", "gettersAnne",
-     "gettersTransport","gettersNouvelleMatiere"]),
+     "gettersTransport","gettersNouvelleMatiere","gettersconfigEntete"]),
      ...mapGetters("student",["GetterStudent", "GetterCantine", "GetterScolarite", "GetterAbsence", "gettersloadingStudent"]),
        ...mapGetters('personnel', ['getterProfileUsers', "gettersRole"]),
       
@@ -725,6 +908,13 @@ export default {
            }
           return ""
          }}
+     },
+        AnneEncoursLibelle(){
+       let obj = this.gettersAnne.find(tem=>tem.encours == 1)
+       if(obj){
+         return obj.debut_annee+"-"+obj.fin_annee;
+       }
+       return ""
      },
       MatiereId(){
        return (id)=>{
@@ -899,7 +1089,7 @@ export default {
 
          ...mapActions("parametres",["getTrimestre","getNiveau","AjouterNiveau", "ModifierNiveau","SupprimerNiveau",
          "getClasse", "getMatiere", "getAnnee", "AjouterMessageEmail", "AjouterMessageSms", "AjouterTransport",
-         "getTransport","AjouterEmailUnique",'getNouvelleMatiere']),
+         "getTransport","AjouterEmailUnique",'getNouvelleMatiere',"getconfigEntete"]),
          ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","get_Liste_Cantine",
          "SupprimerCantine", "getAbsence", "AjouterAbsence", "AjouterCantine", "getScolarite", "AjouterScolarite"]),
              ...mapActions('personnel', ['getUserProfile', "getRole"]),
@@ -1231,7 +1421,7 @@ export default {
       return moment(date, "YYYY-MM-DD").format("YYYY-MM-DD HH:mm");
     },
      genererEnPdf(){
-       this.showMe = true
+    
         const localOptions = {
                     styles: [
                     'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
@@ -1240,7 +1430,8 @@ export default {
                     ]
                 };
 
-        this.$htmlToPaper('printMe', localOptions,  this.showMe = true);
+        this.$htmlToPaper('printMe', localOptions,  );
+        
         },
            formatageSomme:formatageSomme,
     formatageSommeSansFCFA:formatageSommeSansFCFA,
@@ -1249,6 +1440,23 @@ export default {
 }
 </script>
 <style scoped>
+table{
+  border-collapse: collapse;
+}
+
+th, td{
+  border: 1px solid black;
+  padding: 10px;
+  border-width: none;
+}
+.bars{
+    width: 170px;
+    height: 2px;
+    
+    margin-left: 100px;
+     border: 1px solid #000;
+    
+}
  .bloc-modale{
         position: fixed;
         top: 0;
@@ -1283,5 +1491,8 @@ export default {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+.hide {
+    visibility: hidden !important;
 }
 </style>

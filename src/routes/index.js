@@ -79,47 +79,74 @@ const routes = [
             {
                 path: 'Bilan-annee',
                 name: 'BilanAnne',
-                component: BilanAnne
+                component: BilanAnne,
+                meta: {
+                    requiresAuth: true
+                }
               },
             {
                 path: 'Bilan-annee-configuration',
                 name: 'BilanAnneeRgister',
-                component: BilanAnneeRgister
+                component: BilanAnneeRgister,
+                meta: {
+                    requiresAuth: true
+                }
               },
             {
                 path: 'accueil',
                 name: 'Caroussel',
-                component: Caroussel
+                component: Caroussel,
+                meta: {
+                    requiresAuth: true
+                }
               },
             {
                 path:"entete",
                 name:"Entete",
-                component:Entete
+                component:Entete,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"modification-entete/:id",
                 name:"EnteteConfigMod",
-                component:EnteteConfigMod
+                component:EnteteConfigMod,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"info-eleve/:id",
                 name:"InfoEleve",
-                component:InfoEleve
+                component:InfoEleve,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"detail-parent-info-eleve/:id",
                 name:"DetailParentEleve",
-                component:DetailParentEleve
+                component:DetailParentEleve,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"configuration-entete",
                 name:"EnteteConfig",
-                component:EnteteConfig
+                component:EnteteConfig,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"dashbord",
                 name:"Dashbord",
-                component:Dashbord
+                component:Dashbord,
+                meta: {
+                    requiresAuth: true
+                }
             },
             // {
             //     path:"Login-home-page",
@@ -129,138 +156,219 @@ const routes = [
             {
                 path:"statistique-de-la-scolarite",
                 name:"ScolariteStatistique",
-                component:ScolariteStatistique
+                component:ScolariteStatistique,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"paiement-de-la-scolarite",
                 name:"ScolaritePaiement",
-                component:ScolaritePaiement
+                component:ScolaritePaiement,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"etat-de-paiement-de-la-scolarite",
                 name:"ScolariteEtat",
-                component:ScolariteEtat
+                component:ScolariteEtat,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"niveau",
                 name:"Niveau",
-                component:Niveau
+                component:Niveau,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"Liste-de-classe/:id",
                 name:"ListeDeClasse",
-                component:ListeDeClasse
+                component:ListeDeClasse,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"Liste-de-matiere/:id",
                 name:"ListeDeMatiere",
-                component:ListeDeMatiere
+                component:ListeDeMatiere,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"matieres",
                 name:"Matiere",
-                component:Matiere
+                component:Matiere,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"nouvelle-matiere",
                 name:"NouvelleMatiere",
-                component:NouvelleMatiere
+                component:NouvelleMatiere,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"semestre",
                 name:"Semestre",
-                component:Semestre
+                component:Semestre,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"Annee-scolaire",
                 name:"AnneeScolaire",
-                component:Annee
+                component:Annee,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"gestion-des-utilisateurs",
                 name:"Utilisateur",
-                component:Utilisateur
+                component:Utilisateur,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"gestion-des-roles",
                 name:"Role",
-                component:Role
+                component:Role,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"classe",
                 name:"Classe",
-                component:Classe
+                component:Classe,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"notification-email",
                 name:"NotificationEmail",
-                component:NotificationEmail
+                component:NotificationEmail,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"paiement-transport",
                 name:"TransportPaiement",
-                component:TransportPaiement
+                component:TransportPaiement,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"statistique-transport",
                 name:"TransportStatistique",
-                component:TransportStatistique
+                component:TransportStatistique,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"affectation/:id",
                 name:"Affectation",
-                component:Affectation
+                component:Affectation,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"modifier-affectation/:id",
                 name:"AffectationModification",
-                component:AffectationModification
+                component:AffectationModification,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"update-profile-user/:id",
                 name:"UpdateProfile",
-                component:UpdateProfile
+                component:UpdateProfile,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"profile-user",
                 name:"Profile",
-                component:Profile
+                component:Profile,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"user-online",
                 name:"UserOnline",
-                component:UserOnline
+                component:UserOnline,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"permission",
                 name:"Permission",
-                component:Permission
+                component:Permission,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"connexion",
                 name:"LoginUser",
                 component:Login,
+                meta: {
+                    requiresAuth: true
+                },
                 props: true 
             },
             {
                 path:"notification-sms",
                 name:"NotificationSms",
-                component:NotificationSms
+                component:NotificationSms,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"Liste-des-eleves",
                 name:"ListeDesEleves",
-                component:ListeDesEleves
+                component:ListeDesEleves,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"payer-cantine",
                 name:"PayerCantine",
-                component:PayerCantine
+                component:PayerCantine,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"nouvelle-insertion-de-livret-de-competence",
                 name:"Insertion",
-                component:Insertion
+                component:Insertion,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"voir-livret-de-competence",
@@ -270,7 +378,10 @@ const routes = [
             {
                 path:"Configuration-livret",
                 name:"Configuration",
-                component:Configuration
+                component:Configuration,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path:"Ajouter-configiguration-accueil",

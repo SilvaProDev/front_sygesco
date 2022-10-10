@@ -2,15 +2,15 @@
   <div>
   <div class="container-login" >
     <div class="row ">
-      <div class="col-xl-10 col-lg-12 col-md-9" >
+      <div class="col" >
         <div class="bloc-modale" style="width:100%"  :style="{ backgroundImage: 'url(' + images+ ')', width: '900%', height: '1000px' }">
 
         <div class="overlay" > 
-        <div class="card shadow-lg" style="width:100%; margin-left:40%">
+        <div class="card shadow-lg" >
           <div class="card-body p-0" >
             <div class="row">
            
-              <div class=" col-lg-12">
+              <div class=" col">
                 <div class="login-form">
                  
                   <div class="mb-3">
@@ -188,8 +188,8 @@ created(){
     position: fixed;
     top: 100px;
     bottom: 0;
-    left: 20%;
-    right: 400;   
+    left: 31%;
+    right: 31%;   
 }
 
  .modale {

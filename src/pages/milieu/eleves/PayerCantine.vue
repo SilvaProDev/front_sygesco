@@ -51,6 +51,14 @@
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Liste des élèves de la classe de : <span v-if="formData.niveau_id !='' && formData.classe_id !='' ">{{LibClasse(formData.classe_id)}}</span> </h6>
+                  <div class="input-group col-sm-4" >
+                        <input  type="text" v-model="search" class="form-control" placeholder="Recherche par nom, prenom">
+                        <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="table-responsive p-3" >
                   
@@ -73,7 +81,7 @@
                    
                     <tbody>
 
-                      <tr v-for="(item, index) in ListeEleveParClasse" :key="item.id" :value="item.id">
+                      <tr v-for="(item, index) in localisationsFiltre" :key="item.id" :value="item.id">
                         <td>{{index+1}}</td>
                         <td>{{item.nom}}</td>
                         <td>{{item.prenom}}</td>
@@ -251,7 +259,7 @@ export default {
             
           },
         
-        
+        search:""
           // formData:{
           //   niveau_id:"",
           //   classe_id:"",
@@ -284,6 +292,17 @@ export default {
         AfficherClasse(){
         return this.gettersClasse.filter(tem =>tem.niveau_id == this.formData.niveau_id)
      },
+          localisationsFiltre() {
+      const searchTerm = this.search.toLowerCase();
+
+      return this.ListeEleveParClasse.filter((item) => {
+        return (
+          item.nom.toLowerCase().includes(searchTerm) ||
+          item.prenom.toLowerCase().includes(searchTerm)
+        );
+      });
+      
+    },
      TrimestreEncours(){
        let obj = this.gettersTrimestre.find(tem =>tem.encours == 1)
          if(obj){

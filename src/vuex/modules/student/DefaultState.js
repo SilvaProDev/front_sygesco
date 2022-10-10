@@ -2,6 +2,7 @@
 const DefaultState ={
     student:[],
     note:[],
+    moyenne:[],
     cantine:[],
     absence:[],
     scolarite:[],

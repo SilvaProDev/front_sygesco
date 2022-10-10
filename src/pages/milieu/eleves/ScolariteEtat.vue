@@ -249,7 +249,11 @@ export default {
        ScolariteEleveImpayer(){
         return (id)=>{
             if(id != "" && id != null){
-            return parseInt(this.ScolariteEleve(id)) - parseInt(this.ScolariteParEleve(id))
+            let montant = parseInt(this.ScolariteEleve(id)) - parseInt(this.ScolariteParEleve(id))
+            if(isNaN(montant)){
+              return 0
+            }
+            return montant
                
             }
         }
@@ -279,7 +283,7 @@ export default {
           console.log(unique);
          
           if (unique.length == 0) {
-            return [];
+            return 0;
           }
           return unique.map((i) => Number(i)).reduce(function(a, b){
             return a + b;
@@ -287,7 +291,7 @@ export default {
         }
      
            }
-       return []
+       return 0
        }
       
       },

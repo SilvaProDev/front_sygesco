@@ -8,7 +8,7 @@
           
         <h2>Detail de l'eleve</h2>
       <hr>
-        <button type="button" class="btn btn-primary" @click.prevent="genererEnPdf()"
+        <button type="button" class="btn btn-warning" @click.prevent="genererEnPdf()"
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1 || getterProfileUsers.role_id ==4">Imprimer
         </button>
         &nbsp;&nbsp;
@@ -18,6 +18,12 @@
         <!-- &nbsp;
         <button type="button" class="btn btn-secondary">Nouvelle Photo</button> -->
         &nbsp;
+        &nbsp;
+        
+        <button type="button" class="btn btn-primary"  @click.prevent="BulletinEleve(editText.id)"
+        v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==4">Bulletin</button>
+         &nbsp;
+
         <button  @click.prevent="ModificationEleve(editText.id)" type="button" class="btn btn-success"
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1">Modifier les infos</button>
         &nbsp;
@@ -32,10 +38,7 @@
         &nbsp;
         <button @click.prevent="DetailNote(editText.id)" type="button" class="btn btn-success" 
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1">Note </button>
-        &nbsp;
-        <button type="button" class="btn btn-primary"  @click.prevent="BulletinEleve(editText.id)"
-        v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==4">Bulletin</button>
-         &nbsp;
+       
         <button type="button" class="btn btn-danger"  @click.prevent="ShowModal(editText.id)"
         v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1"> Payer la cantine</button> <br><br>
          &nbsp;
@@ -121,7 +124,7 @@
                 </span> <br> <br>
               
 
-                <h5> {{NbreAbsence}} Absence<span v-if="NbreAbsence > 1">s</span> </h5>
+                <h5> {{NbreAbsence}} Absence<span v-if="NbreAbsence > 0">s</span> </h5>
                 <span v-for="item in FiltreParAbsence" :key="item.id" :value="item.id">
                 <span style="color:#000; font-weight:bold"> {{formaterDate2(item.date)}} =></span>{{LibelleMatiere(MatiereId(item.matiere_id))}} <br>
                  
@@ -139,7 +142,7 @@
                     <span v-for="item in CantineParEleve" :key="item.id" :value="item.id">
 
                  <span style="color:#000; font-weight:bold"> {{formaterDate1(item.date)}} =></span> {{item.montant}} 
-                    <a title="Supprimer" href="" @click.prevent="SupprimerCantine(item.id)" >x</a> &nbsp; 
+                    <!-- <a title="Supprimer" href="" @click.prevent="SupprimerCantine(item.id)" >x</a> &nbsp;  -->
                     </span>
                     <span> 
                   </span> <br>
@@ -759,13 +762,13 @@ export default {
        return ""
      },
      FiltreTransportParEleve(){
-       return this.gettersTransport.filter(tem=>tem.student_id == this.$route.params.id)
+       return this.gettersTransport.filter(tem=>tem.student_id == this.editText.id)
      },
        NbreAbsence(){
          return this.FiltreParAbsence.length;
        },
      FiltreParAbsence(){
-       return this.GetterAbsence.filter(tem=>tem.student_id == this.$route.params.id)
+       return this.GetterAbsence.filter(tem=>tem.student_id == this.editText.id)
      },
      ResteTotalApayerParEleve(){
        return this.editText.scolarite - this.sommeTotalScolariteParEleve
@@ -815,7 +818,7 @@ export default {
        return []
       },
       CantineParEleve(){
-        return this.GetterCantine.filter(tem=>tem.student_id == this.$route.params.id)
+        return this.GetterCantine.filter(tem=>tem.student_id == this.editText.id)
       },
          TrimestreEncours(){
        let obj = this.gettersTrimestre.find(tem =>tem.encours == 1)

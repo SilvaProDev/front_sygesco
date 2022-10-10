@@ -186,6 +186,7 @@
                   </div>
               </div>
             </div>
+            
         <Drawer @close="annuler" align="right" :closeable="true" style="background-color:#fff">
       <div v-if="open" class="ModalStyle">
          

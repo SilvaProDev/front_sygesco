@@ -68,10 +68,10 @@ export  function getUserOnLine({commit}) {
       id: user.id,
     },{ headers: authHeader() })).then(resp =>{
         
-      commit("PROILE_USER", resp.data)
       dispatch("getUserProfile")
       dispatch("getUserOnLine")
-       localStorage.removeItem('token')
+      localStorage.removeItem('token')
+      commit("PROILE_USER", resp.data)
     
   }).catch(error =>console.log(error));
    localStorage.removeItem('token')

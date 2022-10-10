@@ -92,7 +92,7 @@
         <p class=" text-gray-800 font-weight-bold"> Si vous desirez voir la liste complète de la cantine payée pendant une période précise, Alors  selectionnez uniquement 
           l'intervalle de la <span style="background-color:aqua;">date de début</span> et de la <span style="background-color:aqua;">date de fin</span> 
           </p>
-             <form action="" method="post">
+             <div class="row">
              
                <div class="col-6 col-md-3">
                   <div class="form-group">
@@ -133,10 +133,8 @@
                   </div>
               </div>
           
-              <div class="col-6 col-md-3">
-              </div>
              
-            </form>
+            </div>
         </div>
          
          <!-- Row -->

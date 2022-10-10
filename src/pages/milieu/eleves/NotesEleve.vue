@@ -32,7 +32,7 @@
               
               <div class="col-6 col-md-3">
                   <div class="form-group" v-if="this.getterProfileUsers.role_id == 1">
-                      <label for="niveau">{{ $t("ul.niveau") }} </label>
+                      <label for="niveau">{{ $t("ul.niveau") }} {{NoteTotales(8,this.formData.matiere_id)}} {{MoyenneTotales(8,this.formData.matiere_id)}} {{TailleNoteTotales(8,this.formData.matiere_id)}} {{GroupeParMoyenne(8)}} {{coefficientParMoyenne(8)}}  </label>
                       
                         <select class="form-control" id="niveau" v-model="formData.niveau_id" >
                           <option value="" selected disabled hidden >Selectionner le niveau</option>
@@ -237,7 +237,9 @@ export default {
       this.getClasse();
       this.getNouvelleMatiere();
       this.get_all_student();
+      this.getMoyenne();
        this.getTrimestre();
+       this.get_note();
       this.getMatiere();
           this.getUserProfile();
         //    this.login();
@@ -256,7 +258,7 @@ export default {
     },
      computed:{
      ...mapGetters("parametres",["gettersNiveau", "gettersClasse", "gettersTrimestre", "gettersMatiere","gettersNouvelleMatiere"]),
-     ...mapGetters("student",["GetterStudent"]),
+     ...mapGetters("student",["GetterStudent","GetterNote","GetterMoyenne"]),
      ...mapGetters('personnel', ['getterProfileUsers', "gettersRole"]),
 
     AfficherNiveau(){
@@ -269,6 +271,99 @@ export default {
         }
     }
 },
+
+  moyenneParEtudiant(){
+    return (id)=>{
+      if(id != "" && id != null){
+        let moyenne = (this.GroupeParMoyenne(id)/ (this.coefficientParMoyenne(id)))
+        if(moyenne){
+          return moyenne.toFixed(2)
+        }
+        return 0
+      }
+    }
+  },
+   coefficientParMoyenne(){
+    return(id)=>{
+      if(id != "" && id!= null){
+        let objet = this.GetterMoyenne.filter(tem=>tem.student_id == id)
+        let array_exercie = []
+        if (objet.length > 0) {
+          objet.forEach(function (val) {
+            array_exercie.push(val.coefficient);
+          });
+          let unique = array_exercie;
+         
+          if (unique.length == 0) {
+            return [];
+          }
+          return unique.map(Number).reduce(function(a,b){
+            return a +b;
+          }, 0);
+        }
+      // }
+       return []
+
+      }
+      return []
+     }
+      },
+
+   GroupeParMoyenne(){
+    return(id)=>{
+      if(id != "" && id!= null){
+        let objet = this.GetterMoyenne.filter(tem=>tem.student_id == id)
+        let array_exercie = []
+        if (objet.length > 0) {
+          objet.forEach(function (val) {
+            array_exercie.push(val.moyenne * val.coefficient);
+          });
+          let unique = array_exercie;
+         
+          if (unique.length == 0) {
+            return [];
+          }
+          return unique.map(Number).reduce(function(a,b){
+            return a +b;
+          }, 0);
+        }
+      // }
+       return []
+
+      }
+      return []
+     }
+      },
+         MoyenneTotales(){
+          return(id1,id2)=>{
+            if(id1 != "" && id1 != null && id2 != "" && id2 != null && this.formData.note != "" && this.formData.note != null){
+     
+              return ((this.NoteTotales(id1,id2))/(this.TailleNoteTotales(id1,id2))).toFixed(2)
+            }
+            return 0
+
+          }
+     },
+     NoteTotales(){
+      return(id1, id2)=>{
+        if( id1 != "" && id1 != null && id2 != "" && id2 != null && this.formData.note != "" && this.formData.note != null){
+          let montant = this.GroupeParMoyenne(id1) + parseInt((this.formData.note)*(this.coefficient(id2)))
+          return montant;
+        }
+        return ""
+        
+      }
+     },
+     TailleNoteTotales(){
+      return(id1,id2)=>{
+          if(id1 != "" && id1 != null && id2 != "" && id2 != null && this.formData.note != "" && this.formData.note != null){
+            let montant = this.coefficientParMoyenne(id1)+this.coefficient(id2)
+            return montant;
+          }
+          return ""
+
+      }
+     },
       tester2(){
        let objet = this.getterProfileUsers.affectations
        let tableau =[]
@@ -354,6 +449,16 @@ export default {
            let obj = this.gettersMatiere.find(tem=>tem.id == id)
            if(obj){
              return obj.nouvelle_matiere_id;
+           }
+         }
+       }
+     },
+     coefficient(){
+       return (id)=>{
+         if(id != ""){
+           let obj = this.AfficherMatiere.find(tem=>tem.id == id)
+           if(obj){
+             return obj.coefficient;
            }
          }
        }
@@ -448,13 +553,74 @@ export default {
          }
      },
 
-    
+         MoyennePArMatiere(){
+        if(this.formData.matiere_id != "" ){
+        let objet = this.GetterNote.filter(tem =>tem.student_id == this.editText.id && 
+        tem.trimestre_id == this.TrimestreEncoursId && tem.matiere_id == this.formData.matiere_id);   
+        let array_exercie = [];
+        if (objet.length > 0) {
+          objet.forEach(function (val) {
+            array_exercie.push(val.note); 
+          });
+          let unique = array_exercie;
+          console.log(unique);         
+         if (unique.length == 0) {return [];}
+          return unique.map(Number).reduce(function(a,b){
+            return a +b;
+          }, 0);
+        } 
+        return 0;
+         }
+         return 0  
+     },
+         MoyennePArMatiereTaille(){
+        if(this.formData.matiere_id != "" ){
+        let objet = this.GetterNote.filter(tem =>tem.student_id == this.editText.id && 
+        tem.trimestre_id == this.TrimestreEncoursId && tem.matiere_id == this.formData.matiere_id);   
+        let array_exercie = [];
+        if (objet.length > 0) {
+          objet.forEach(function (val) {
+            array_exercie.push(val.note); 
+          });
+          let unique = array_exercie;
+          console.log(unique);         
+         if (unique.length == 0) {return [];}
+          return unique.length
+        } 
+       
+         }
+         return 0  
+     },
+     MoyenneTotale(){
+       if(this.formData.note != "" ){
+
+         return (parseInt(this.NoteTotale)/parseInt(this.TailleNoteTotale))
+       }
+       return 0
+     },
+     NoteTotale(){
+      if(this.formData.note != "" && this.formData.note != null){
+        let montant = this.MoyennePArMatiere + parseInt(this.formData.note)
+        return montant;
+      }
+      return ""
+     },
+     TailleNoteTotale(){
+      if(this.formData.note != "" && this.formData.note != null){
+        let montant = this.MoyennePArMatiereTaille+1
+        return montant;
+      }
+      return ""
+     }
+
+
   },
 
   methods:{
      ...mapActions("parametres",["getNiveau","AjouterNiveau", "ModifierNiveau","SupprimerNiveau","getClasse",
                    "getTrimestre","getMatiere","getNouvelleMatiere"]),
-     ...mapActions("student",["get_all_student","AjouterEleve", "ModifierEleve","SupprimerEleve","AjouterNote", "ModifierNote"]),
+     ...mapActions("student",["get_all_student","AjouterEleve","get_note", "ModifierEleve","SupprimerEleve","AjouterNote",
+       "ModifierNote","getMoyenne"]),
      ...mapActions('personnel', ['getUserProfile','changePassword',"getRole"]),
      ModificationEleve(id){
         this.$router.push({ name:"editStudent", params:{id:id}})
@@ -491,13 +657,19 @@ export default {
           let obj ={
             ...this.formData,
             student_id: this.editText.id,
-           
+            moy_annuelle: this.MoyenneTotales(this.editText.id,this.formData.matiere_id),
+            coeff:this.coefficient(this.formData.matiere_id),
+            moyenne:this.MoyenneTotale,
+            total:this.NoteTotale,
+            taille: this.TailleNoteTotale,
+            id:this.editText.id,
+
             trimestre_id: this.TrimestreEncoursId,
             statut: this.StatutMatiere,
 
           }
-          // console.log(obj)
           this.AjouterNote(obj)
+           console.log(obj)
           this.$v.formData.$reset();
           this.formData.date ="";
           this.formData.matiere_id ="";

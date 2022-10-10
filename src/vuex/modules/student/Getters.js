@@ -2,6 +2,7 @@ import { groupBy } from "../../../Repositorie/Repository";
 
 export const GetterStudent = state => state.student;
 export const GetterNote = state => state.note;
+export const GetterMoyenne = state => state.moyenne;
 export const GetterCantine = state => state.cantine;
 export const GetterAbsence = state => state.absence;
 export const GetterScolarite = state => state.scolarite;

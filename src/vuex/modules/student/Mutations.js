@@ -37,6 +37,9 @@ export const MODIFIER_STUDENT = (state, objetModifie) => {
 export const SUPPRIMER_STUDENT = (state, id) => {
   state.student = state.student.filter(prest => prest.id != id)
 }
+export const GET_MOYENNE =(state, tableau)=>{
+  state.moyenne = tableau
+}
 //MUTATION DE LA NOTE
 export const GET_ALL_NOTE =(state, tableau)=>{
   state.note = tableau

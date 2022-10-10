@@ -2,26 +2,22 @@
   <div>
   <div class="container-login" >
     <div class="row " >
-      <div class="col-xl-12 col-lg-4 col-md-6"  >
+      <div class="col"  >
         <div class="bloc-modale" style="width:100%;" :style="{ backgroundImage: 'url(' + images+ ')', width: '900%', height: '1000px' }">
 
         <div class="overlay" > 
-        <div class="card col" style="width:100%; height:50%" >
+        <div class="card col"  >
           <div class="card-body p-0" >
-            <!-- <div class="row"> -->
            
                 <div class="login-form">
-                 
-                 
-
-                    <form action="">
-                        
-                   <div class="row ">
+        
+                  <form action="">
+                  <div class="row ">
             <!-- tableau des professeur -->
-            <div class="col-xl-3 col-md-4">
+            <div class="col">
              <a href="" title="Se connecter en tant que Administrateur système ?" @click.prevent="AjouterUser(1)" style="text-decoration: none;">
                  <!-- <input type="hidden"  :value="1" > -->
-            <div class="card h-100 p-2" style="background-color:#008000;">
+            <div class="card h-100 p-3" style="background-color:#008000;">
                 <div class="card-body ">
                   <div class="row align-items-center">
                     <div class="col mr-3">
@@ -36,10 +32,10 @@
               </div>
              </a>
             </div>
-            <div class="col-xl-3 col-md-4">
+            <div class="col">
               <a href="" title="Se connecter en tant que Administrateur  ?" style="text-decoration: none;" @click.prevent="AjouterUser(2)">
                   <div class="card h-100">
-                <div class="card-body p-2" style="background-color:#DCDCDC;">
+                <div class="card-body p-3" style="background-color:#DCDCDC;">
                   <div class="row align-items-center">
                     <div class="col mr-3">
                       <div class="text-xs font-weight-bold text-uppercase text-black">Administrateur  </div> 
@@ -55,9 +51,9 @@
               </a>
             </div>
 
-            <div class="col-xl-3 col-md-4">
+            <div class="col">
                 <a href="" title="Se connecter en tant que professeur ?" style="text-decoration: none;" @click.prevent="AjouterUser(3)">
-                <div class="card h-100 p-2" style="background-color:#41EFEB;">
+                <div class="card h-100 p-3" style="background-color:#41EFEB;">
                     <div class="card-body ">
                     <div class="row align-items-center">
                         <div class="col mr-3">
@@ -73,10 +69,10 @@
 
                 </a>
             </div>
-            <div class="col-xl-3 col-md-4">
+            <div class="col">
                 <a href="" title="Se connecter en tant que Parent ?" style="text-decoration: none;" @click.prevent="AjouterUser(4)">
               <div class="card h-100 ">
-                <div class="card-body p-2" style="background-color:#FF0000;">
+                <div class="card-body p-3" style="background-color:#FF0000;">
                   <div class="row align-items-center">
                     <div class="col mr-3">
                       <div class="text-xs font-weight-bold text-uppercase text-black">Parents</div>
@@ -95,7 +91,6 @@
                     </form>
                 
                 </div>
-            <!-- </div> -->
           </div>
         </div>
           </div>
@@ -193,8 +188,8 @@ data(){
     position: fixed;
     top: 200px;
     bottom: 0;
-    left: 300px;
-    right: 40;   
+    left: 0;
+    right: 0;   
 }
 
  .modale {
@@ -205,7 +200,7 @@ data(){
         top: 10%;
         width:35%;
         /* margin-right: 45%; */
-        left: 60%;
+        left: 50%;
 }
 
  .close{
