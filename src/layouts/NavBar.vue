@@ -48,7 +48,7 @@
              
             </li>
             <!-- <div class="topbar-divider d-none d-sm-block"></div> -->
-            <li class="nav-item dropdown no-arrow" v-if="getterProfileUsers.length !=0">
+            <li class="nav-item dropdown no-arrow" >
               <a class="nav-link dropdown-toggle" @click.prevent="toggle1" href="">
                 <span style="background-color:red;font-size: 11px;" class="badge badge-danger" >{{$t("nav.parametre")}}</span>
               </a>
@@ -517,7 +517,7 @@
          <div class="card-body" style="width:350px !important;" >
           
             <div class="row">
-              <a v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1" href="#" class="dropdown-item"  @click.prevent="AjouterAnnee">
+              <a  href="#" class="dropdown-item"  @click.prevent="AjouterAnnee">
             <i class="fa fa-cogs"></i>
                 {{ $t("ul.anne") }}
                 
@@ -567,7 +567,7 @@
             </div>
                  <hr>                                 
             <div class="row">
-              <a v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1" class="dropdown-item" href="#" @click.prevent="AjouterRole">
+              <a  class="dropdown-item" href="#" @click.prevent="AjouterRole">
                 <i class="fas fa-user -tag" ></i>
                     Rôle
                 </a>
