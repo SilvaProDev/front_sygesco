@@ -887,7 +887,8 @@ created(){
             }
          let obj ={
            ...this.formData,
-           annee_id: this.AnneEncours
+           annee_id: 1
+          //  annee_id: this.AnneEncours
          
          }
          this.AjouterUtilisateur(obj)
