@@ -766,15 +766,17 @@ export default {
         this.annuler()
       },
       AjouterAnnee(){
-        if(this.active == true){
-          this.$router.push({
+        // if(this.active == true){
+        //   this.$router.push({
+        //     name:"AnneeScolaire"
+        //   })
+        //   this.annuler1()
+        // }else if(confirm("Désoler, vous ne pouvez pas acceder à cette page, Se connecter ..?") ==true){
+        //   this.AjouterUser()
+        // }
+        this.$router.push({
             name:"AnneeScolaire"
           })
-          this.annuler1()
-        }else if(confirm("Désoler, vous ne pouvez pas acceder à cette page, Se connecter ..?") ==true){
-          // alert("Désoler, vous ne pouvez pas acceder à cette page")
-          this.AjouterUser()
-        }
         
       },
       AjouterNiveau(){
@@ -868,15 +870,18 @@ export default {
         this.annuler1()
       },
       AjouterRole(){
-         if(this.active == true){         
-           this.$router.push({
+        //  if(this.active == true){         
+        //    this.$router.push({
+        //      name:"Role"
+        //    })
+        //    this.annuler1()
+        // }
+        // else if(confirm("Désoler, vous ne pouvez pas acceder à cette page, Se connecter?") ==true){
+        //   this.AjouterUser()
+        // }
+        this.$router.push({
              name:"Role"
            })
-           this.annuler1()
-        }
-        else if(confirm("Désoler, vous ne pouvez pas acceder à cette page, Se connecter?") ==true){
-          this.AjouterUser()
-        }
       },
       ConfigAccueil(){
          if(this.active == true){          
