@@ -560,7 +560,7 @@
             </div>
                  <hr>                                 
             <div class="row">
-              <a v-if="getterProfileUsers.length !=0 && getterProfileUsers.role_id ==1" class="dropdown-item" href="#" @click.prevent="AjouterPermission">
+              <a  class="dropdown-item" href="#" @click.prevent="AjouterPermission">
                <i class="fas fa-chalkboard-teacher"></i>
                     Permission
                 </a>
@@ -846,16 +846,19 @@ export default {
         }
       },
       AjouterPermission(){
-         if(this.active == true){
+      //    if(this.active == true){
           
-           this.$router.push({
+      //      this.$router.push({
+      //        name:"Permission"
+      //      })
+      //      this.annuler1()
+      //   }
+      //  else if(confirm("Désoler, vous ne pouvez pas acceder à cette page, Se connecter ..?") ==true){
+      //     this.AjouterUser()
+      //   }
+      this.$router.push({
              name:"Permission"
            })
-           this.annuler1()
-        }
-       else if(confirm("Désoler, vous ne pouvez pas acceder à cette page, Se connecter ..?") ==true){
-          this.AjouterUser()
-        }
       },
       ProfilUser(){
         this.$router.push({
